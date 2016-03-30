@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">QuickBite</string>
+    <string name="title_activity_firebase">FirebaseActivity</string>
 </resources>
