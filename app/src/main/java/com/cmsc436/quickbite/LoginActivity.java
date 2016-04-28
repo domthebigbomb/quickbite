@@ -11,6 +11,8 @@ import com.firebase.client.Firebase;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static Firebase myFirebaseRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,9 @@ public class LoginActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-    }
 
+        // initialize variables for Firebase interaction (can be moved somewhere else)
+        Firebase.setAndroidContext(this);
+        myFirebaseRef = new Firebase("https://quick-bite.firebaseio.com/");
+    }
 }
