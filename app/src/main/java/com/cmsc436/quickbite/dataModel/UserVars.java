@@ -15,6 +15,8 @@ public class UserVars {
     public ArrayList<CheckIn> checkIns = new ArrayList<CheckIn>();
     public ArrayList<Bite> bites = new ArrayList<Bite>();
 
+    private UserVars() {}
+
     public UserVars(String username, int rank, int points) {
         this.username = username;
         this.rank = rank;
@@ -44,6 +46,17 @@ public class UserVars {
         }
         return false;
     }
+
+    public void updateRank(int newRank) { this.rank = newRank; }
+    public void updatePoints(int newAmt) { this.points = newAmt; }
+
+    // getters required for Firebase.DataSnapshot.getValue(class type) method
+    public String getUsername() { return username; }
+    public int getRank() { return rank; }
+    public int getPoints() { return points; }
+    public ArrayList<Address> getFavorites() { return favorites; }
+    public ArrayList<CheckIn> getCheckIns() { return checkIns; }
+    public ArrayList<Bite> getBites() { return bites; }
 
     // Class to represent data for a CheckIn event
     public class CheckIn {
