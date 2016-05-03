@@ -20,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public static Firebase myFirebaseRef = null;
     public boolean newFirebase = false;
+    public boolean loggedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +40,11 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
 
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            Toolbar toolbar_userprofile = (Toolbar) findViewById(R.id.tool_bar_login);
+            setSupportActionBar(toolbar_userprofile);
+
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_login);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

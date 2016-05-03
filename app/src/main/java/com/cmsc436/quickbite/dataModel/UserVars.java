@@ -11,6 +11,7 @@ public class UserVars {
     public String username;
     public int rank;
     public int points;
+    public boolean loggedIn;
     public ArrayList<Address> favorites = new ArrayList<Address>();
     public ArrayList<CheckIn> checkIns = new ArrayList<CheckIn>();
     public ArrayList<Bite> bites = new ArrayList<Bite>();
@@ -49,11 +50,13 @@ public class UserVars {
 
     public void updateRank(int newRank) { this.rank = newRank; }
     public void updatePoints(int newAmt) { this.points = newAmt; }
+    public void setLoggedIn(boolean newVal) { this.loggedIn = newVal; }
 
     // getters required for Firebase.DataSnapshot.getValue(class type) method
     public String getUsername() { return username; }
     public int getRank() { return rank; }
     public int getPoints() { return points; }
+    public boolean getLoggedIn() { return loggedIn; }
     public ArrayList<Address> getFavorites() { return favorites; }
     public ArrayList<CheckIn> getCheckIns() { return checkIns; }
     public ArrayList<Bite> getBites() { return bites; }

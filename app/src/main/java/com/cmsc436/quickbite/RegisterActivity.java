@@ -22,10 +22,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Toolbar toolbar_userprofile = (Toolbar) findViewById(R.id.tool_bar_register);
+        setSupportActionBar(toolbar_userprofile);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_register);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -35,8 +37,6 @@ public class RegisterActivity extends AppCompatActivity {
                 RegisterActivity.this.startActivity(startLogin);
             }
         });
-
-
 
         // ^ Above code responds to existing button. Completely arbitrary.
 
