@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.cmsc436.quickbite.TimerActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current wait time: ~25 min"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="24dp"
+        android:textColor="#4A4A4A"/>
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:weightSum="3"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true">
+        <ImageButton
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/resetButton"
+            android:background="@drawable/qb_reset"
+            android:adjustViewBounds="true"
+            android:layout_weight="1"
+            android:layout_alignParentEnd="false"
+            android:onClick="resetTimer"/>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_centerInParent="true"
+            android:id="@+id/myFAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/qb_start"
+            android:layout_weight="1"
+            android:layout_marginBottom="24dp"
+            android:onClick="toggleTimer" />
+        <Button
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/submitButton"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:text="Submit"
+            android:textColor="#ff0068"
+            style="?android:attr/borderlessButtonStyle"
+            android:textAlignment="viewEnd"
+            android:onClick="submitTime"
+            android:textSize="22dp" />
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/waitingTime"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/quickbite_primary"
+        android:textAlignment="center"
+        android:cursorVisible="false"
+        android:textSize="48dp"
+        android:focusable="false" />
+</RelativeLayout>
