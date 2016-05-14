@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">QuickBite</string>
-    <string name="title_activity_firebase">FirebaseActivity</string>
+    <!--register activity strings-->
+    <string name="title_activity_register">Register</string>
+    <!--login activity strings-->
+    <string name="title_activity_login">Login</string>
+    <!--userprofile strings-->
+    <string name="title_activity_userprofile">User Profile</string>
+    <string name="action_settings">action_settings</string>
+    <!--user-unique strings-->
+    <string name="username_label">Username Here</string>
 </resources>
