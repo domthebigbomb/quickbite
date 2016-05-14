@@ -26,11 +26,6 @@ public class FirebaseActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        System.out.print("OnCreateBundle");
-        Firebase.setAndroidContext(this);
-        System.out.print("OnCreate");
-        Firebase myFirebaseRef = new Firebase("https://quick-bite.firebaseio.com/");
-        myFirebaseRef.child("message").setValue("Do you have data? You'll love Firebase.");
     }
 
 }

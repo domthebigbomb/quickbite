@@ -15,16 +15,23 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
+
 public class ComposeBiteActivity extends AppCompatActivity {
     EditText reviewText;
     TextView charCountView;
     Button postButton;
     int sentimentIndex = 3;
+    Firebase restaurantRef;
+    String author = "Dom";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose_bite);
 
+        // Replace with restaurant id
+        restaurantRef = new Firebase("https://quick-bite.firebaseio.com/");//.child("bites").child("1");
         reviewText = (EditText) findViewById(R.id.review_text);
         reviewText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -118,6 +125,10 @@ public class ComposeBiteActivity extends AppCompatActivity {
         updateSentiments();
     }
     protected void submitBite(View view) {
+        Firebase biteRef = restaurantRef.push();
+        Bite bite = new Bite(System.currentTimeMillis(), author, reviewText.getText().toString(), sentimentIndex + 1);
+        biteRef.setValue("Test");
+        Log.d("Dom", "Sent bite");
 
     }
 }
