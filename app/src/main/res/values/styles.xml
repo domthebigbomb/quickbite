@@ -14,7 +14,7 @@
         <item name="colorPrimary">#00B9E6</item>
         <item name="colorPrimaryDark">#0094B8</item>
         <item name="colorAccent">#FF0068</item>
-
+        <item name="android:textColorPrimary">#FFFFFF</item>
     </style>
 
     <style name="AppTheme.Toolbar" parent="AppTheme">
