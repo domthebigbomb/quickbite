@@ -1,7 +1,9 @@
 package com.cmsc436.quickbite;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +20,17 @@ import com.firebase.client.FirebaseError;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
+    final Firebase fb = new Firebase("https://quick-bite.firebaseio.com/");
+
+    private Button regButton;
+
+    private EditText etUsername;
+    private EditText etPassword;
+    private EditText etPasswordConfirm;
+
+    private TextView loginLink;
+
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +38,16 @@ public class RegisterActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_register);
 
-        final Firebase fb = new Firebase("https://quick-bite.firebaseio.com/");
 
-        final Button regButton = (Button) findViewById(R.id.bRegister);
+        regButton = (Button) findViewById(R.id.bRegister);
 
-        final EditText etUsername = (EditText) findViewById(R.id.etUsername);
-        final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-        final EditText etPasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
+        etUsername = (EditText) findViewById(R.id.etUsername);
+        etPassword = (EditText) findViewById(R.id.etPassword);
+        etPasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
 
-        final TextView loginLink = (TextView) findViewById(R.id.etLoginHere);
-        final TextView tvIncError = (TextView) findViewById(R.id.tvIncError);
+        loginLink = (TextView) findViewById(R.id.etLoginHere);
+
+        builder = new AlertDialog.Builder(RegisterActivity.this, android.R.style.Theme_Material_Dialog_Alert);
 
         // Sets up login link
         if (loginLink != null) {
@@ -47,70 +60,62 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
         }
-
-        // Sets up register button
-        if (regButton != null) {
-            regButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Checks user/pass bounds
-                    String username = etUsername.getText().toString();
-                    String password = etPassword.getText().toString();
-                    String passwordConfirm = etPasswordConfirm.getText().toString();
-                    if(username.length() > 0 && password.length() > 0 && passwordConfirm.length() > 0) {
-
-                        if(!password.equals(passwordConfirm)) {
-                            // Shows the user an error message
-                            // Uses an Animation to fade in/out
-                            fadeTextView(tvIncError, TextView.VISIBLE);
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    fadeTextView(tvIncError, TextView.INVISIBLE);;
-                                }
-                            }, 4000);
-                            return;
-                        }
-
-                        // Creates a new user
-                        fb.createUser(username, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
-                            @Override
-                            public void onSuccess(Map<String, Object> result) {
-                                System.out.println("Successfully created user account with uid: " + result.get("uid"));
-                                // Returns to login page
-                                //Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                //RegisterActivity.this.startActivity(registerIntent);
-                                finish();
-                            }
-                            @Override
-                            public void onError(FirebaseError firebaseError) {
-                                // there was an error
-                            }
-                        });
-                    } else {
-                    }
-                }
-            });
-        }
     }
 
-    public void fadeTextView(final TextView tv, int fadeTypeIn) {
-        final int fadeType = (fadeTypeIn==View.INVISIBLE) ? View.INVISIBLE : View.VISIBLE;
-        Animation fadeAnimation = (fadeType==View.INVISIBLE) ? new AlphaAnimation(1f, 0f) : new AlphaAnimation(0f, 1f);
-        fadeAnimation.setDuration(1300);
-        fadeAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {}
+    public void register(View view) {
+        // Checks user/pass bounds
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
+        String passwordConfirm = etPasswordConfirm.getText().toString();
+        if(username.length() > 0 && password.length() > 0 && passwordConfirm.length() > 0) {
 
-            @Override
-            public void onAnimationRepeat(Animation animation) {}
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                tv.setVisibility(fadeType);
+            if(!password.equals(passwordConfirm)) {
+                // Shows the user an error message
+                // Uses an Animation to fade in/out
+                builder.setTitle("Registration Error");
+                builder.setMessage("Passwords do not match")
+                        .setNegativeButton("Got it", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return;
             }
-        });
-        tv.startAnimation(fadeAnimation);
+
+            // Creates a new user
+            fb.createUser(username, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
+                @Override
+                public void onSuccess(Map<String, Object> result) {
+                    System.out.println("Successfully created user account with uid: " + result.get("uid"));
+                    // Returns to login page
+                    finish();
+                }
+                @Override
+                public void onError(FirebaseError firebaseError) {
+                    // there was an error
+                    builder.setTitle("Registration Error");
+                    builder.setMessage(firebaseError.getMessage())
+                            .setNegativeButton("Got it", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
+        } else {
+            builder.setTitle("Registration Error");
+            builder.setMessage("Please fill out all fields")
+                    .setNegativeButton("Got it", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 }

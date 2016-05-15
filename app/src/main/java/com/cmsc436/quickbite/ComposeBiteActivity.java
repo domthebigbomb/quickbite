@@ -128,7 +128,7 @@ public class ComposeBiteActivity extends AppCompatActivity {
         updateSentiments();
     }
 
-    protected void submitBite(View view) {
+    public void submitBite(View view) {
         final String biteContent = reviewText.getText().toString();
         if (biteContent.equals("")) {
             final AlertDialog.Builder builder;
