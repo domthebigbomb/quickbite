@@ -1,16 +1,20 @@
 package com.cmsc436.quickbite.slidingtab.ListElements;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 //import com.cmsc436.quickbite.tabbedview.R;
+import com.cmsc436.quickbite.ComposeBiteActivity;
 import com.cmsc436.quickbite.R;
+import com.cmsc436.quickbite.TimerActivity;
 import com.yelp.clientlib.connection.YelpAPI;
 import com.yelp.clientlib.connection.YelpAPIFactory;
 import com.yelp.clientlib.entities.Business;
@@ -143,4 +147,8 @@ public class RestaurantProfile extends AppCompatActivity {
         }
     }
 
+    public void checkIn(View view) {
+        Intent checkInIntent = new Intent(this, TimerActivity.class);
+        startActivity(checkInIntent);
+    }
 }
