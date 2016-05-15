@@ -1,9 +1,12 @@
 package com.cmsc436.quickbite;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.media.Image;
+import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.ColorInt;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,7 +34,7 @@ public class ComposeBiteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_compose_bite);
 
         // Replace with restaurant id
-        restaurantRef = new Firebase("https://quick-bite.firebaseio.com/");//.child("bites").child("1");
+        restaurantRef = new Firebase("https://quick-bite.firebaseio.com/").child("1").child("bites");
         reviewText = (EditText) findViewById(R.id.review_text);
         reviewText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -124,11 +127,26 @@ public class ComposeBiteActivity extends AppCompatActivity {
         sentimentIndex = 4;
         updateSentiments();
     }
+
     protected void submitBite(View view) {
+        final String biteContent = reviewText.getText().toString();
+        if (biteContent.equals("")) {
+            final AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(ComposeBiteActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+            builder.setTitle("Bite Error");
+            builder.setMessage("Message cannot be empty")
+                    .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return;
+        }
         Firebase biteRef = restaurantRef.push();
         Bite bite = new Bite(System.currentTimeMillis(), author, reviewText.getText().toString(), sentimentIndex + 1);
-        biteRef.setValue("Test");
-        Log.d("Dom", "Sent bite");
-
+        biteRef.setValue(bite);
+        finish();
     }
 }

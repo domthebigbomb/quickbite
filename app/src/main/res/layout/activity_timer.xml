@@ -12,11 +12,23 @@
         android:layout_height="wrap_content"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="Current wait time: ~25 min"
-        android:id="@+id/textView"
+        android:text="@string/checkin_instructions"
+        android:id="@+id/instructions"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif"
+        android:textSize="24dp"
+        android:textAlignment="center"
+        android:textColor="#4A4A4A"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/instructions"
+        android:text="Current wait time: ~25 min"
+        android:id="@+id/currentWaitTime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
         android:textSize="24dp"
         android:textColor="#4A4A4A"/>
@@ -27,15 +39,13 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
         android:weightSum="3"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentEnd="true">
         <android.support.design.widget.FloatingActionButton
             android:layout_centerInParent="true"
             android:id="@+id/myFAB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/qb_start"
-            android:layout_weight="1"
             android:layout_marginBottom="24dp"
             android:onClick="toggleTimer" />
         <ImageButton
@@ -48,20 +58,18 @@
             android:src="@drawable/qb_reset"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            android:layout_weight="1"
             android:layout_alignParentEnd="false"
             android:onClick="resetTimer"
             android:background="@android:color/transparent"
             android:layout_alignBottom="@+id/submitButton" />
         <Button
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/myFAB"
+            android:layout_toEndOf="@+id/myFAB"
             android:id="@+id/submitButton"
             android:background="@android:color/transparent"
-            android:layout_weight="1"
             android:text="Submit"
             android:textColor="#ff0068"
             style="?android:attr/borderlessButtonStyle"
@@ -72,6 +80,8 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:inputType="number"
         android:ems="10"
         android:id="@+id/waitingTime"
@@ -80,7 +90,6 @@
         android:textAlignment="center"
         android:cursorVisible="false"
         android:textSize="48dp"
-        android:focusable="false"
-        android:layout_alignStart="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
+        android:focusable="false" />
+
 </RelativeLayout>

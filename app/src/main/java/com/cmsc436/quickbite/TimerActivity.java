@@ -15,6 +15,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.firebase.client.Firebase;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +29,7 @@ public class TimerActivity extends AppCompatActivity {
     private int elapsedTime = 0;
     private Timer timer;
     private EditText waitText;
+    Firebase waitRef;
 
     public Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -55,6 +58,8 @@ public class TimerActivity extends AppCompatActivity {
         });
 
         updateTimerView();
+
+        waitRef = new Firebase("https://quick-bite.firebaseio.com/").child("1").child("waitTime");
     }
 
     protected int[] timeComponents(int seconds) {
@@ -123,7 +128,8 @@ public class TimerActivity extends AppCompatActivity {
     public void submitTime(View view) {
         Intent intent = new Intent(this, ComposeBiteActivity.class);
         String waitTime = waitText.getText().toString();
-        //intent.putExtra(EXTRA_MESSAGE, waitTime);
+        waitRef.setValue(elapsedTime);
+        finish();
         startActivity(intent);
     }
 }

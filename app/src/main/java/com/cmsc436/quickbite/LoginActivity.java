@@ -20,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_login);
 
         final Firebase fb = new Firebase("https://quick-bite.firebaseio.com/");

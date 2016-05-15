@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">QuickBite</string>
     <string name="title_activity_firebase">FirebaseActivity</string>
-    <string name="title_activity_timer">Report Time</string>
+    <string name="title_activity_timer">Check In</string>
     <string name="title_activity_compose">Rate Your Experience</string>
     <string name="bite_compose">Describe your experience (Optional)</string>
+    <string name="checkin_instructions">Check in using the timer below\n(or tap to enter a time)</string>
 </resources>
