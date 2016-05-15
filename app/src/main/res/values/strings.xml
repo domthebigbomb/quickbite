@@ -5,4 +5,47 @@
     <string name="title_activity_compose">Rate Your Experience</string>
     <string name="bite_compose">Describe your experience (Optional)</string>
     <string name="checkin_instructions">Check in using the timer below\n(or tap to enter a time)</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Names -->
+    <string-array name="Location_names">
+        <item>RJ Bentley\'s</item>
+        <item>Cornerstone</item>
+        <item>Chipotle</item>
+
+    </string-array>
+
+    <!-- Pictures -->
+    <array name="icon_pics">
+        <item>@drawable/ic_map_marker_green</item>
+        <item>@drawable/ic_map_marker_yellow</item>
+        <item>@drawable/ic_map_marker_red</item>
+    </array>
+
+    <!-- Status -->
+    <string-array name="address">
+        <item>7323 Baltimore Ave, College Park, MD 20740</item>
+        <item>7325 Baltimore Ave, College Park, MD 20740</item>
+        <item>7332 Baltimore Ave. College Park, MD 20740</item>
+    </string-array>
+
+    <!-- location type -->
+    <string-array name="distance">
+        <item>.1mi</item>
+        <item>.1mi</item>
+        <item>.2mi</item>
+        <item>.2mi</item>
+        <item>.25mi</item>
+        <item>.5mi</item>
+    </string-array>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="action_search">Place Search</string>
+    <string name="search_hint">Search address or place</string>
+    <string name="menu_search">Search</string>
+
+    <string name="address_search">Searching for Address</string>
+    <string name="addressSearchFailed">Address search failed</string>
+    <string name="noResultsFound">No results found</string>
 </resources>

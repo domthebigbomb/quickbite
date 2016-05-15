@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.cmsc436.quickbite.tabbedview.MainActivity;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthenticated(AuthData authData) {
                 // Authenticated successfully with payload authData
                 // For now, sends the user to the TimerActivity
-                Intent loggedInIntent = new Intent(LoginActivity.this, TimerActivity.class);
+                Intent loggedInIntent = new Intent(LoginActivity.this, MainActivity.class);
                 LoginActivity.this.startActivity(loggedInIntent);
             }
             @Override
