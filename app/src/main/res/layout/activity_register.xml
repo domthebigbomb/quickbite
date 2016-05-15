@@ -28,10 +28,15 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/etUsername"
-        android:hint="E-Mail"
-        android:textColorHint="#a3dfee"
+        android:hint="  Email"
+        android:background="@drawable/userpass_bg"
+        android:textColorHint="#8DDFF3"
         android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="35dp"
+        android:layout_marginTop="15dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -40,9 +45,12 @@
         android:ems="10"
         android:id="@+id/etPassword"
         android:layout_below="@+id/etUsername"
-        android:layout_centerHorizontal="true"
-        android:hint="Password"
-        android:textColorHint="#a3dfee" />
+        android:hint=" Password"
+        android:background="@drawable/userpass_bg"
+        android:textColorHint="#8DDFF3"
+        android:layout_alignStart="@+id/etUsername"
+        android:layout_alignEnd="@+id/etUsername"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -51,20 +59,35 @@
         android:ems="10"
         android:id="@+id/etPasswordConfirm"
         android:layout_below="@+id/etPassword"
-        android:layout_centerHorizontal="true"
-        android:hint="Confirm Password"
-        android:textColorHint="#a3dfee" />
+        android:hint=" Confirm Password"
+        android:background="@drawable/userpass_bg"
+        android:textColorHint="#8DDFF3"
+        android:layout_alignStart="@+id/etPassword"
+        android:layout_alignEnd="@+id/etPassword"
+        android:layout_marginTop="10dp" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:text="Register"
         android:id="@+id/bRegister"
         android:layout_below="@+id/etPasswordConfirm"
-        android:layout_alignStart="@+id/textView"
-        android:layout_alignEnd="@+id/textView"
-        android:background="#00B9E6"
-        android:textColor="#a3dfee" />
+        android:background="@drawable/button_bg"
+        android:textColor="#8DDFF3"
+        android:textAllCaps="false"
+        android:layout_alignStart="@+id/etPasswordConfirm"
+        android:layout_alignEnd="@+id/etPasswordConfirm"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Passwords Don&apos;t Match"
+        android:id="@+id/tvIncError"
+        android:textColor="#ed4b4b"
+        android:visibility="invisible"
+        android:layout_below="@+id/bRegister"
+        android:layout_alignStart="@+id/etLoginHere" />
 
     <TextView
         android:layout_width="wrap_content"
