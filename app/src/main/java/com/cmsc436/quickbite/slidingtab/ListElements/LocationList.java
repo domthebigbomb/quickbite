@@ -152,7 +152,7 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 
 			RowItem item = new RowItem((nearbyLocations.get(i).name()),
 					(icon_pics.getResourceId(0, -1)), (address.toString() + ", " + nearbyLocations.get(i).location().city()),
-					("" +(String.format("%.2g%n", (nearbyLocations.get(i).distance() * 0.000621371))) +"mi"), nearbyLocations.get(i).id());
+					((String.format("%.2g ", (nearbyLocations.get(i).distance() * 0.000621371))) +"mi"), nearbyLocations.get(i).id());
 
 
 			rowItems.add(item);

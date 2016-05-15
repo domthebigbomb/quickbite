@@ -9,18 +9,19 @@
         android:id="@+id/icon_pic"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_centerVertical="true"
         android:contentDescription="desc"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" />
 
     <TextView
         android:id="@+id/Location_names"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/icon_pic"
-        android:paddingBottom="10dp"
-        android:text="txt"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/icon_pic"
+        android:layout_marginBottom="4dp"
+        android:text="Place name"
         android:textColor="#000000"   
         android:textSize="20sp" />
 
@@ -28,9 +29,11 @@
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/Location_names"
+        android:layout_alignStart="@+id/Location_names"
         android:layout_below="@+id/Location_names"
-        android:text="txt"
+        android:layout_toStartOf="@+id/distance"
+        android:layout_marginBottom="8dp"
+        android:text="address"
         android:textColor="#bdbdbd"
         android:textSize="16sp" />
 
@@ -38,13 +41,12 @@
         android:id="@+id/distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/Location_names"
-        android:layout_alignBottom="@+id/Location_names"
-        android:layout_alignParentRight="true"
-        android:paddingBottom="5dp"
-        android:text="txt"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:text="dist"
         android:textColor="#bdbdbd"
-        android:layout_marginLeft="7dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
         android:textSize="16sp" />
 
 </RelativeLayout>
