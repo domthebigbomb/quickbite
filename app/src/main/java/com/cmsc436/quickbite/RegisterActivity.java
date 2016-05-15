@@ -22,8 +22,6 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
     final Firebase fb = new Firebase("https://quick-bite.firebaseio.com/");
 
-    private Button regButton;
-
     private EditText etUsername;
     private EditText etPassword;
     private EditText etPasswordConfirm;
@@ -35,11 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_register);
-
-
-        regButton = (Button) findViewById(R.id.bRegister);
 
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
@@ -54,8 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
             loginLink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    //RegisterActivity.this.startActivity(registerIntent);
                     finish();
                 }
             });

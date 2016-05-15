@@ -22,7 +22,6 @@ import com.firebase.client.FirebaseError;
 
 public class LoginActivity extends AppCompatActivity {
     final Firebase fb = new Firebase("https://quick-bite.firebaseio.com/");
-    private Button loginButton;
 
     private EditText etUsername;
     private EditText etPassword;
@@ -35,8 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        loginButton = (Button) findViewById(R.id.bLogin);
 
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
@@ -60,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View view) {
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
-
 
         if (username.length() == 0 || password.length() == 0) {
             builder.setTitle("Login Error");
@@ -89,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 // Authenticated failed with error firebaseError
                 // Shows the user an error message
                 builder.setTitle("Login Error");
-                builder.setMessage("Invalid Email or Password")
+                builder.setMessage(firebaseError.getMessage())
                         .setNegativeButton("Got it", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
