@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.cmsc436.quickbite.slidingtab.ListElements.LocationList;
 import com.firebase.client.Firebase;
 
 import java.text.SimpleDateFormat;
@@ -29,7 +30,8 @@ public class TimerActivity extends AppCompatActivity {
     private int elapsedTime = 0;
     private Timer timer;
     private EditText waitText;
-    Firebase waitRef;
+    private Firebase waitRef;
+    private String restaurantID;
 
     public Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -59,7 +61,10 @@ public class TimerActivity extends AppCompatActivity {
 
         updateTimerView();
 
-        waitRef = new Firebase("https://quick-bite.firebaseio.com/").child("1").child("waitTime");
+        Bundle bundle = getIntent().getExtras();
+        restaurantID = bundle.getString(LocationList.restaurantIDKey);
+
+        waitRef = new Firebase("https://quick-bite.firebaseio.com/").child(restaurantID).child("waitTime");
     }
 
     protected int[] timeComponents(int seconds) {
@@ -126,10 +131,11 @@ public class TimerActivity extends AppCompatActivity {
 
     // Submit current time and show next activity
     public void submitTime(View view) {
-        Intent intent = new Intent(this, ComposeBiteActivity.class);
+        Intent biteIntent = new Intent(this, ComposeBiteActivity.class);
+        biteIntent.putExtra(LocationList.restaurantIDKey, restaurantID);
         String waitTime = waitText.getText().toString();
         waitRef.setValue(elapsedTime);
         finish();
-        startActivity(intent);
+        startActivity(biteIntent);
     }
 }

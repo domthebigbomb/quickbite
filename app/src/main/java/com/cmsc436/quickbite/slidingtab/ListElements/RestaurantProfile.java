@@ -38,7 +38,7 @@ public class RestaurantProfile extends AppCompatActivity {
     YelpAPIFactory apiFactory = new YelpAPIFactory(consumerKey, consumerSecret, token, tokenSecret);
     YelpAPI yelpAPI = apiFactory.createAPI();
     Response<Business> response;
-
+    private String restaurantID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +49,10 @@ public class RestaurantProfile extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
-        String message = bundle.getString("message");
+        restaurantID = bundle.getString(LocationList.restaurantIDKey);
 
         //needs to be in an asycn task to avoid NetworkOnMainThreadException
-        new GetBusinessData().execute(message);
+        new GetBusinessData().execute(restaurantID);
 
 
     }
@@ -149,6 +149,7 @@ public class RestaurantProfile extends AppCompatActivity {
 
     public void checkIn(View view) {
         Intent checkInIntent = new Intent(this, TimerActivity.class);
+        checkInIntent.putExtra(LocationList.restaurantIDKey, restaurantID);
         startActivity(checkInIntent);
     }
 }
