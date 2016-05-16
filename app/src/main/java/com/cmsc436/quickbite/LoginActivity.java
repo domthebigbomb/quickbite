@@ -2,6 +2,7 @@ package com.cmsc436.quickbite;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.cmsc436.quickbite.tabbedview.MainActivity;
@@ -20,37 +22,59 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import java.util.concurrent.TimeUnit;
+
 public class LoginActivity extends AppCompatActivity {
+    static String emailKey = "email";
     final Firebase fb = new Firebase("https://quick-bite.firebaseio.com/");
+
+    private Button loginButton;
+    private Button showRegisterButton;
 
     private EditText etUsername;
     private EditText etPassword;
 
-    private TextView registerLink;
-
     private AlertDialog.Builder builder;
+
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
+    FrameLayout progressBarHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        loginButton = (Button) findViewById(R.id.bLogin);
+        showRegisterButton = (Button) findViewById(R.id.bShowRegister);
+        progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
+
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
 
-        registerLink = (TextView) findViewById(R.id.etSignUpHere);
-
         builder = new AlertDialog.Builder(LoginActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+    }
 
-        // Sets up register link
-        if (registerLink != null) {
-            registerLink.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                    LoginActivity.this.startActivity(registerIntent);
-                }
-            });
+    private void enableLoginViews(boolean enabled) {
+        loginButton.setEnabled(enabled);
+        showRegisterButton.setEnabled(enabled);
+        etUsername.setEnabled(enabled);
+        etPassword.setEnabled(enabled);
+    }
+
+    private void showProgressBar(boolean isShowingProgress) {
+        if (isShowingProgress) {
+            enableLoginViews(false);
+            inAnimation = new AlphaAnimation(0f, 1f);
+            inAnimation.setDuration(200);
+            progressBarHolder.setAnimation(inAnimation);
+            progressBarHolder.setVisibility(View.VISIBLE);
+        } else {
+            outAnimation = new AlphaAnimation(1f, 0f);
+            outAnimation.setDuration(200);
+            progressBarHolder.setAnimation(outAnimation);
+            progressBarHolder.setVisibility(View.GONE);
+            enableLoginViews(true);
         }
     }
 
@@ -77,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthenticated(AuthData authData) {
                 // Authenticated successfully with payload authData
                 // For now, sends the user to the TimerActivity
+                showProgressBar(false);
                 Intent loggedInIntent = new Intent(LoginActivity.this, MainActivity.class);
                 LoginActivity.this.startActivity(loggedInIntent);
             }
@@ -89,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                         .setNegativeButton("Got it", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
+                                showProgressBar(false);
                             }
                         });
                 AlertDialog dialog = builder.create();
@@ -96,6 +122,22 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
+        showProgressBar(true);
         fb.authWithPassword(username, password, authResultHandler);
+    }
+
+    public void showRegistration(View view) {
+        Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+        LoginActivity.this.startActivityForResult(registerIntent, 1);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                String newEmail =data.getStringExtra(LoginActivity.emailKey);
+                etUsername.setText(newEmail);
+            }
+        }
     }
 }

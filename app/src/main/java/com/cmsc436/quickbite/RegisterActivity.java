@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
@@ -22,11 +23,16 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
     final Firebase fb = new Firebase("https://quick-bite.firebaseio.com/");
 
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
+    FrameLayout progressBarHolder;
+
+    Button registerButton;
+    Button showLoginButton;
+
     private EditText etUsername;
     private EditText etPassword;
     private EditText etPasswordConfirm;
-
-    private TextView loginLink;
 
     private AlertDialog.Builder builder;
 
@@ -35,28 +41,44 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        registerButton = (Button) findViewById(R.id.bRegister);
+        showLoginButton = (Button) findViewById(R.id.bShowLogin);
+        progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
+
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etPasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
 
-        loginLink = (TextView) findViewById(R.id.etLoginHere);
-
         builder = new AlertDialog.Builder(RegisterActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+    }
 
-        // Sets up login link
-        if (loginLink != null) {
-            loginLink.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+    private void enableRegisterViews(boolean enabled) {
+        registerButton.setEnabled(enabled);
+        showLoginButton.setEnabled(enabled);
+        etUsername.setEnabled(enabled);
+        etPassword.setEnabled(enabled);
+        etPasswordConfirm.setEnabled(enabled);
+    }
+
+    private void showProgressBar(boolean isShowingProgress) {
+        if (isShowingProgress) {
+            enableRegisterViews(false);
+            inAnimation = new AlphaAnimation(0f, 1f);
+            inAnimation.setDuration(200);
+            progressBarHolder.setAnimation(inAnimation);
+            progressBarHolder.setVisibility(View.VISIBLE);
+        } else {
+            outAnimation = new AlphaAnimation(1f, 0f);
+            outAnimation.setDuration(200);
+            progressBarHolder.setAnimation(outAnimation);
+            progressBarHolder.setVisibility(View.GONE);
+            enableRegisterViews(true);
         }
     }
 
     public void register(View view) {
         // Checks user/pass bounds
-        String username = etUsername.getText().toString();
+        final String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
         String passwordConfirm = etPasswordConfirm.getText().toString();
         if(username.length() > 0 && password.length() > 0 && passwordConfirm.length() > 0) {
@@ -76,12 +98,17 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
+            showProgressBar(true);
             // Creates a new user
             fb.createUser(username, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
                 @Override
                 public void onSuccess(Map<String, Object> result) {
                     System.out.println("Successfully created user account with uid: " + result.get("uid"));
                     // Returns to login page
+                    showProgressBar(false);
+                    Intent intent = new Intent();
+                    intent.putExtra(LoginActivity.emailKey, username);
+                    setResult(RESULT_OK, intent);
                     finish();
                 }
                 @Override
@@ -92,6 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
                             .setNegativeButton("Got it", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
+                                    showProgressBar(false);
                                 }
                             });
                     AlertDialog dialog = builder.create();
@@ -109,5 +137,9 @@ public class RegisterActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+    }
+
+    public void showLogin(View view) {
+        finish();
     }
 }

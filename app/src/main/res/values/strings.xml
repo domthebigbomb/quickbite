@@ -3,10 +3,14 @@
     <string name="title_activity_firebase">FirebaseActivity</string>
     <string name="title_activity_timer">Check In</string>
     <string name="title_activity_compose">Rate Your Experience</string>
-    <string name="bite_compose">Describe your experience (Optional)</string>
     <string name="checkin_instructions">Check in using the timer below\n(or tap to enter a time)</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Compose Bite -->
+    <string name="character_count">140</string>
+    <string name="post_button">Post</string>
+    <string name="bite_compose">Describe your experience (Optional)</string>
 
     <!-- Names -->
     <string-array name="Location_names">
