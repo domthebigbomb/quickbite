@@ -19,6 +19,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cmsc436.quickbite.R;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -59,6 +63,7 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 	YelpAPI yelpAPI = apiFactory.createAPI();
 	Map<String, String> params = new HashMap<>();
 	ArrayList<Business> nearbyLocations = new ArrayList<Business>();
+	Firebase fb;
 
 
 	private class GetYelpData extends AsyncTask<Call<SearchResponse>, Void, ArrayList<Business>> {
@@ -73,6 +78,7 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 			}
 			return new ArrayList<>();
 		}
+
 
 	}
 
@@ -126,7 +132,6 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-
 		rowItems = new ArrayList<RowItem>();
 		//Location_names = getResources().getStringArray(R.array.Location_names);
 		icon_pics = getResources().obtainTypedArray(R.array.icon_pics);
