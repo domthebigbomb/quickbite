@@ -48,14 +48,6 @@
             android:name=".UserProfileActivity"
             android:label="@string/title_activity_userprofile"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <!--Set as default activity (for debugging)
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-            -->
         </activity>
         
         <activity
