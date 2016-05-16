@@ -25,18 +25,31 @@
         <activity
             android:name=".ComposeBiteActivity"
             android:label="@string/title_activity_compose" />
+            
+        <!--Login Activity-->
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        
+        <!--Register Activity-->
         <activity
             android:name=".RegisterActivity"
             android:theme="@style/AppTheme.NoTitle">
         </activity>
+        
+        <!--User Profile Activity-->
+        <activity
+            android:name=".UserProfileActivity"
+            android:label="@string/title_activity_userprofile"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        
         <activity
             android:name=".slidingtab.ListElements.RestaurantProfile">
         </activity>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_userprofile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.cmsc436.quickbite.UserProfileActivity"
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <!--toolbar-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tool_bar_userprofile"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        <!--username label-->
+        <android.widget.TextView
+            android:id="@+id/username_userprofile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/username_font_size"
+            android:gravity="center">
+        </android.widget.TextView>
+
+
+        <!--user options-->
+        <android.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <!--info-->
+            <android.widget.LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#3F51B5">
+
+                <ToggleButton
+                    android:id="@+id/userprofile_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#3F51B5"
+                    android:text="Info"
+                    android:textSize="@dimen/user_options_font_size"
+                    android:gravity="center"/>
+
+            </android.widget.LinearLayout>
+
+            <!-- check-ins -->
+            <android.widget.LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#3F51B5">
+
+                <ToggleButton
+                    android:id="@+id/userprofile_checkins"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#3F51B5"
+                    android:text="Check-Ins"
+                    android:textSize="@dimen/user_options_font_size"
+                    android:gravity="center"/>
+            </android.widget.LinearLayout>
+
+            <!-- bites -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#3F51B5">
+
+                <ToggleButton
+                    android:id="@+id/userprofile_bites"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#3F51B5"
+                    android:text="Bites"
+                    android:textSize="@dimen/user_options_font_size"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </android.widget.LinearLayout>
+        <!-- end user options -->
+
+        <!--
+        <fragment android:name="com.cmsc436.quickbite.fragments.InfoFragment_UP"
+            android:id="@+id/userprofile_info_fragment"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        -->
+
+    </android.support.design.widget.AppBarLayout>
+
+</android.support.design.widget.CoordinatorLayout>
