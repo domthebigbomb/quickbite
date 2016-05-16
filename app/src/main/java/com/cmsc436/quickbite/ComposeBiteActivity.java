@@ -18,23 +18,27 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.cmsc436.quickbite.slidingtab.ListElements.LocationList;
 import com.firebase.client.Firebase;
 
 public class ComposeBiteActivity extends AppCompatActivity {
-    EditText reviewText;
-    TextView charCountView;
-    Button postButton;
-    int sentimentIndex = 3;
-    Firebase restaurantRef;
-    String author = "Dom";
+    private EditText reviewText;
+    private TextView charCountView;
+    private Button postButton;
+    private int sentimentIndex = 3;
+    private Firebase restaurantRef;
+    private String author = "Anon";
+    private String restaurantID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose_bite);
 
-        // Replace with restaurant id
-        restaurantRef = new Firebase("https://quick-bite.firebaseio.com/").child("1").child("bites");
+        Bundle bundle = getIntent().getExtras();
+        restaurantID = bundle.getString(LocationList.restaurantIDKey);
+
+        restaurantRef = new Firebase("https://quick-bite.firebaseio.com/").child(restaurantID).child("bites");
         reviewText = (EditText) findViewById(R.id.review_text);
         reviewText.addTextChangedListener(new TextWatcher() {
             @Override
