@@ -28,6 +28,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 //import com.cmsc436.quickbite.tabbedview.R;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.yelp.clientlib.connection.YelpAPI;
 import com.yelp.clientlib.connection.YelpAPIFactory;
 import com.yelp.clientlib.entities.Business;
@@ -49,6 +51,7 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 		com.google.android.gms.location.LocationListener{
     public static String restaurantIDKey = "restaurant_id";
 	public static String restaurantNameKey = "restaurant_name";
+    public static String waitKey = "wait_time";
 	TypedArray icon_pics;
 	List<RowItem> rowItems;
 	Location userLocation = new Location("");
@@ -64,7 +67,7 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 	Map<String, String> params = new HashMap<>();
 	ArrayList<Business> nearbyLocations = new ArrayList<Business>();
 	Firebase fb;
-
+	CustomAdapter adapter;
 
 	private class GetYelpData extends AsyncTask<Call<SearchResponse>, Void, ArrayList<Business>> {
 
@@ -118,9 +121,10 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 		//params.put("term", "Fast Food");
 		params.put("sort", "1");
 		params.put("radius_filter", "3000");
+		//final Map <String, Long> wait = new HashMap<String, Long>();
 
 		//params.put("location", "College Park, MD 20740");
-		Log.d("The users loc",userLocation.getLatitude() + "  " + userLocation.getLongitude());
+		Log.d("The users loc", userLocation.getLatitude() + "  " + userLocation.getLongitude());
 		CoordinateOptions coordinate = CoordinateOptions.builder()
 				.latitude(userLocation.getLatitude())
 				.longitude(userLocation.getLongitude()).build();
@@ -133,36 +137,107 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 			e.printStackTrace();
 		}
 		rowItems = new ArrayList<RowItem>();
-		//Location_names = getResources().getStringArray(R.array.Location_names);
 		icon_pics = getResources().obtainTypedArray(R.array.icon_pics);
-		//address = getResources().getStringArray(R.array.address);
-		//distance = getResources().getStringArray(R.array.distance);
+
 
 
 		for (int i = 0; i < nearbyLocations.size(); i++) {
 			Log.d("MY LOCATIONS", nearbyLocations.get(i).name());
-			//LatLng locLatLng = new LatLng(38.980481, -76.937557);
-			//distance = Double.toString(distanceCalculator(userLocation.getLatitude(), userLocation.getLongitude(), l1, l2));
 			ArrayList<String> locAddress = nearbyLocations.get(i).location().address();
 			StringBuilder address = new StringBuilder();
 			for (int x = 0; x < locAddress.size(); x++)  {
 				address.append(locAddress.get(x));
 				address.append(" ");
 			}
+			long value = 0;
+
+			fb = new Firebase("https://quick-bite.firebaseio.com/").child(nearbyLocations.get(i).id()).child("waitTime");
+			fb.addValueEventListener(new ValueEventListener() {
+				@Override
+				public void onDataChange(DataSnapshot dataSnapshot) {
+					Business currentBusiness = null;
+					StringBuilder addressIn = null;
+					RowItem itemIn = null;
+					int idx = -1;
+					int resId = -1;
+                    long wait = -1;
+					String restaurantID = dataSnapshot.getRef().toString();
+					restaurantID = restaurantID.substring("https://quick-bite.firebaseio.com/".length());
+					restaurantID = restaurantID.substring(0, restaurantID.indexOf("/waitTime"));
+					for (int j = 0; j < nearbyLocations.size(); j++) {
+						if (nearbyLocations.get(j).id().toString().equals(restaurantID)) {
+							currentBusiness = nearbyLocations.get(j);
+							ArrayList<String> locAddress = currentBusiness.location().address();
+							addressIn = new StringBuilder();
+							for (int x = 0; x < locAddress.size(); x++)  {
+								addressIn.append(locAddress.get(x));
+								addressIn.append(" ");
+							}
+							idx = j;
+							break;
+						}
+
+					}
+
+					if (dataSnapshot.getValue() != null && currentBusiness!= null) {
+						 wait = (long) dataSnapshot.getValue();
+
+						if (wait > -1 && wait < 36000) {
+							resId =0;
+
+						}else if (wait > 36000 && wait < 108000) {
+							resId = 1;
+
+						} else if (wait > 108000) {
+							resId =2;
+
+						} else {
+
+						}
+
+
+					} else {
+					}
+
+					if (resId != -1) {
+
+					//	for (int z = 0; z < rowItems.size(); z++) {
+						//	if (rowItems.get(z).getLocation_id().equals(itemIn.getLocation_id())) {
+								rowItems.get(idx).seticon_id(icon_pics.getResourceId(resId,-1));
+                                rowItems.get(idx).setWaitTime(wait);
+
+								//rowItems.set(idx, itemIn);
+								adapter.notifyDataSetChanged();
+							//	break;
+							}
+						//}
+					//}
+				}
+
+				@Override
+				public void onCancelled(FirebaseError firebaseError) {
+					Toast.makeText(getContext(), "Can't read your data!", Toast.LENGTH_SHORT).show();
+
+				}
+			});
+
+
 
 
 			RowItem item = new RowItem((nearbyLocations.get(i).name()),
 					(icon_pics.getResourceId(0, -1)), (address.toString() + ", " + nearbyLocations.get(i).location().city()),
-					((String.format("%.2g ", (nearbyLocations.get(i).distance() * 0.000621371))) +"mi"), nearbyLocations.get(i).id());
+					((String.format("%.2g ", (nearbyLocations.get(i).distance() * 0.000621371))) +"mi"), nearbyLocations.get(i).id(),-1);
 
 
 			rowItems.add(item);
+			if (item.getLocation_id() != null) {
+				Log.d("Rowitems", item.getLocation_id());
+			} else {
+				Log.d("Rowitems", "null");
+			}
 		}
-		for (int y = 0; y < rowItems.size(); y++) {
-			Log.d("ROWITEMS" ,rowItems.get(y).getlocation_name());
-		}
-		CustomAdapter adapter = new CustomAdapter(getActivity(), rowItems);
 
+		adapter = new CustomAdapter(getActivity(), rowItems);
 
 		setListAdapter(adapter);
 		ListView lv = getListView();
@@ -174,6 +249,7 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 				Intent i = new Intent(getContext(), RestaurantProfile.class);
 				i.putExtra(LocationList.restaurantIDKey, item.getLocation_id());
                 i.putExtra(LocationList.restaurantNameKey, item.getlocation_name());
+				i.putExtra(LocationList.waitKey, item.getWaitTime());
 				startActivity(i);
 			}
 

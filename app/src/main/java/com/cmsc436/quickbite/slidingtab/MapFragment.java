@@ -3,6 +3,7 @@ package com.cmsc436.quickbite.slidingtab;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -94,14 +96,6 @@ public class MapFragment extends Fragment implements GoogleApiClient.ConnectionC
             return new ArrayList<>();
         }
 
-      /*  @Override
-        protected void onPostExecute(ArrayList<Business> b) {
-            for (int i = 1; i < 15; i++) {
-                Log.d("Yelp Data", (b.get(i).name()) + b.get(i).location().coordinate().latitude() + b.get(i).location().coordinate().longitude());
-
-            }
-
-        }*/
     }
 
 
@@ -170,9 +164,6 @@ public class MapFragment extends Fragment implements GoogleApiClient.ConnectionC
                         CameraPosition position = CameraPosition.builder().target(cur).zoom(13f).build();
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(position);
                         googleMap.moveCamera(cameraUpdate);
-                        //googleMap.addMarker(new MarkerOptions().position(new LatLng(38.980481, -76.937557)).title("RJ Bentley's").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                        //googleMap.addMarker(new MarkerOptions().position(new LatLng(38.980664, -76.937573)).title("Cornerstone").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-                        //googleMap.addMarker(new MarkerOptions().position(new LatLng(38.980337, -76.938915)).title("Chipotle").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                         // general params
                         //search food, return 3 results
                         params.put("term", "food");
@@ -203,7 +194,7 @@ public class MapFragment extends Fragment implements GoogleApiClient.ConnectionC
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.getValue() == null) {
-                                        googleMap.addMarker(new MarkerOptions().position(loc).title(locName).icon(BitmapDescriptorFactory.defaultMarker(211.0f)));
+                                        googleMap.addMarker(new MarkerOptions().position(loc).title(locName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                                     } else if ((long) dataSnapshot.getValue() < 36000) {
                                         googleMap.addMarker(new MarkerOptions().position(loc).title(locName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                                     } else if ((long) dataSnapshot.getValue() > 108000) {
