@@ -7,6 +7,17 @@ import com.firebase.client.Firebase;
  */
 
 public class MyApplication extends android.app.Application {
+
+    public String username; // Current user
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
