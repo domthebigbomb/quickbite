@@ -30,8 +30,6 @@ import java.util.List;
 import retrofit.Call;
 import retrofit.Response;
 
-//import com.cmsc436.quickbite.tabbedview.R;
-
 public class RestaurantProfile extends AppCompatActivity {
 
     String consumerKey = "0YxBV-Axpu7Z0XD2pp91jg";
@@ -42,6 +40,7 @@ public class RestaurantProfile extends AppCompatActivity {
     YelpAPI yelpAPI = apiFactory.createAPI();
     Response<Business> response;
     private String restaurantID;
+    private String restaurantName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +49,11 @@ public class RestaurantProfile extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         restaurantID = bundle.getString(LocationList.restaurantIDKey);
+        restaurantName = bundle.getString(LocationList.restaurantNameKey);
+
+        getSupportActionBar().setTitle(restaurantName);
+        TextView name = (TextView)findViewById(R.id.name);
+        name.setText(restaurantName);
 
         /*Get average service rating from intent here. Hardcoding it for now*/
         int serviceRating = 3;
@@ -104,12 +108,6 @@ public class RestaurantProfile extends AppCompatActivity {
         RVAdapter adapter = new RVAdapter(biteData);
         rv.setAdapter(adapter);
 
-        //card1.setElevation(3);
-
-
-
-
-
         //needs to be in an asycn task to avoid NetworkOnMainThreadException
         new GetBusinessData().execute(restaurantID);
 
@@ -130,9 +128,6 @@ public class RestaurantProfile extends AppCompatActivity {
             return response;
         }
         protected void onPostExecute(Response<Business> result) {
-            getSupportActionBar().setTitle(result.body().name());
-            TextView name = (TextView)findViewById(R.id.name);
-            name.setText(result.body().name());
             TextView address = (TextView)findViewById(R.id.address);
             List a = result.body().location().displayAddress();
             address.setText((String)a.get(0));
@@ -143,11 +138,7 @@ public class RestaurantProfile extends AppCompatActivity {
             //changing image from "ms.jpg" to "l.jpg" so that we get a higher resolution image & dont have to crop/zoom in as much.
             String largeimageURL = imageURL.substring(0, imageURL.lastIndexOf("ms.jpg")) + "l.jpg";
             new getImage().execute(largeimageURL);
-
-
         }
-
-
     }
 
 
@@ -211,6 +202,7 @@ public class RestaurantProfile extends AppCompatActivity {
     public void checkIn(View view) {
         Intent checkInIntent = new Intent(this, TimerActivity.class);
         checkInIntent.putExtra(LocationList.restaurantIDKey, restaurantID);
+        checkInIntent.putExtra(LocationList.restaurantNameKey, restaurantName);
         startActivity(checkInIntent);
     }
 }

@@ -2,16 +2,11 @@ package com.cmsc436.quickbite;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.media.Image;
-import android.os.Build;
-import android.os.SystemClock;
-import android.support.annotation.ColorInt;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +23,6 @@ public class ComposeBiteActivity extends AppCompatActivity {
     private int sentimentIndex = 3;
     private Firebase restaurantRef;
     private String author = "Anon";
-    private String restaurantID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +30,11 @@ public class ComposeBiteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_compose_bite);
 
         Bundle bundle = getIntent().getExtras();
-        restaurantID = bundle.getString(LocationList.restaurantIDKey);
+        String restaurantID = bundle.getString(LocationList.restaurantIDKey);
+        String restaurantName = bundle.getString(LocationList.restaurantNameKey);
+
+        TextView placeName = (TextView) findViewById(R.id.place_text);
+        placeName.setText(restaurantName);
 
         restaurantRef = new Firebase("https://quick-bite.firebaseio.com/").child(restaurantID).child("bites");
         reviewText = (EditText) findViewById(R.id.review_text);
