@@ -44,12 +44,8 @@ import retrofit.Response;
 public class LocationList extends ListFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
 		com.google.android.gms.location.LocationListener{
     public static String restaurantIDKey = "restaurant_id";
-	String[] Location_names;
 	TypedArray icon_pics;
-	String[] address;
-	double distance;
 	List<RowItem> rowItems;
-	ListView mylistview;
 	Location userLocation = new Location("");
 	private LocationRequest mLocationRequest;
 	private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -68,7 +64,6 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 
 		@Override
 		protected ArrayList<Business> doInBackground(Call<SearchResponse>... params) {
-
 			try {
 				Response<SearchResponse> response = params[0].execute();
 				return response.body().businesses();
@@ -179,12 +174,6 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 
 		});
 	}
-
-	/*@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		getActivity().getMenuInflater().inflate(R.menu.menu_main, menu);
-	}*/
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

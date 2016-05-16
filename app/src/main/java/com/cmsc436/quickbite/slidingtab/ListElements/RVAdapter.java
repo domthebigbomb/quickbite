@@ -26,7 +26,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.BiteViewHolder>{
         BiteViewHolder(View itemView) {
             super(itemView);
             card = (CardView)itemView.findViewById(R.id.card1);
-            card.setElevation(3);
             name = (TextView)itemView.findViewById(R.id.card1name);
             time = (TextView)itemView.findViewById(R.id.card1time);
             review = (TextView)itemView.findViewById(R.id.card1review);
@@ -61,5 +60,4 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.BiteViewHolder>{
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
-
 }
