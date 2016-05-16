@@ -44,6 +44,7 @@ import retrofit.Response;
 public class LocationList extends ListFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
 		com.google.android.gms.location.LocationListener{
     public static String restaurantIDKey = "restaurant_id";
+	public static String restaurantNameKey = "restaurant_name";
 	TypedArray icon_pics;
 	List<RowItem> rowItems;
 	Location userLocation = new Location("");
@@ -163,12 +164,11 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 									int position, long id) {
-
 				final RowItem item = (RowItem) parent.getItemAtPosition(position);
 				//Toast.makeText(getContext(), item.getLocation_id(), Toast.LENGTH_LONG).show();
 				Intent i = new Intent(getContext(), RestaurantProfile.class);
-				String restaurantID = item.getLocation_id();
-				i.putExtra(LocationList.restaurantIDKey, restaurantID);
+				i.putExtra(LocationList.restaurantIDKey, item.getLocation_id());
+                i.putExtra(LocationList.restaurantNameKey, item.getlocation_name());
 				startActivity(i);
 			}
 

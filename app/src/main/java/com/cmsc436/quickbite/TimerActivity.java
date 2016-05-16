@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.widget.TimePicker;
 
 import com.cmsc436.quickbite.slidingtab.ListElements.LocationList;
 import com.firebase.client.Firebase;
+import com.firebase.client.realtime.util.StringListReader;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,6 +34,7 @@ public class TimerActivity extends AppCompatActivity {
     private EditText waitText;
     private Firebase waitRef;
     private String restaurantID;
+    private String restaurantName;
 
     public Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -63,6 +66,7 @@ public class TimerActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         restaurantID = bundle.getString(LocationList.restaurantIDKey);
+        restaurantName = bundle.getString(LocationList.restaurantNameKey);
 
         waitRef = new Firebase("https://quick-bite.firebaseio.com/").child(restaurantID).child("waitTime");
     }
@@ -80,8 +84,7 @@ public class TimerActivity extends AppCompatActivity {
         Date d = new Date(seconds * 1000L);
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss"); // HH for 0-23
         df.setTimeZone(TimeZone.getTimeZone("GMT"));
-        String time = df.format(d);
-        return time;
+        return df.format(d);
     }
 
     // Reset the textfield back to 0
@@ -131,10 +134,11 @@ public class TimerActivity extends AppCompatActivity {
 
     // Submit current time and show next activity
     public void submitTime(View view) {
+        waitRef.setValue(elapsedTime);
+
         Intent biteIntent = new Intent(this, ComposeBiteActivity.class);
         biteIntent.putExtra(LocationList.restaurantIDKey, restaurantID);
-        String waitTime = waitText.getText().toString();
-        waitRef.setValue(elapsedTime);
+        biteIntent.putExtra(LocationList.restaurantNameKey, restaurantName);
         finish();
         startActivity(biteIntent);
     }
