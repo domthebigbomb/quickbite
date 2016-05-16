@@ -62,7 +62,7 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 	YelpAPI yelpAPI = apiFactory.createAPI();
 	Map<String, String> params = new HashMap<>();
 	ArrayList<Business> nearbyLocations = new ArrayList<Business>();
-	public static final String extra_key = "com.example.myapp.MESSAGE";
+
 
 	private class GetYelpData extends AsyncTask<Call<SearchResponse>, Void, ArrayList<Business>> {
 
