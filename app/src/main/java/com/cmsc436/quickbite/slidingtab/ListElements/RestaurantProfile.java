@@ -6,13 +6,13 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-//import com.cmsc436.quickbite.tabbedview.R;
-import com.cmsc436.quickbite.ComposeBiteActivity;
+import com.cmsc436.quickbite.Bite;
 import com.cmsc436.quickbite.R;
 import com.cmsc436.quickbite.TimerActivity;
 import com.yelp.clientlib.connection.YelpAPI;
@@ -24,10 +24,13 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Call;
 import retrofit.Response;
+
+//import com.cmsc436.quickbite.tabbedview.R;
 
 public class RestaurantProfile extends AppCompatActivity {
 
@@ -45,11 +48,67 @@ public class RestaurantProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_profile);
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
         Bundle bundle = getIntent().getExtras();
         restaurantID = bundle.getString(LocationList.restaurantIDKey);
+
+        /*Get average service rating from intent here. Hardcoding it for now*/
+        int serviceRating = 3;
+        TextView service = (TextView)findViewById(R.id.service);
+        if(serviceRating == 1){
+            service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_very_dissatisfied), null, null, null);
+            service.setText("Service is terrible");
+        }else if(serviceRating == 2){
+            service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_dissatisfied), null, null, null);
+            service.setText("Service is bad");
+        }else if(serviceRating == 3){
+            service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_neutral), null, null, null);
+            service.setText("Service is ok");
+        }else if(serviceRating == 4){
+            service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_satisfied), null, null, null);
+            service.setText("Service is good");
+        }else if(serviceRating == 5){
+            service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_satisfied), null, null, null);
+            service.setText("Service is awesome!");
+        }else{
+            service.setText("No service ratings yet!");
+        }
+
+        /*Get wait time from intent here. Hardcoding for now.*/
+        int waitTime = 8;
+        TextView txt = (TextView)findViewById(R.id.waitTime);
+        if(waitTime <= 5){
+            txt.setText("Wait time is very short");
+        }else if(waitTime <= 10){
+            txt.setText("Wait time is short");
+        }else if(waitTime <= 15){
+            txt.setText("Wait time is ok");
+        }else if(waitTime <= 20){
+            txt.setText("Wait time is long");
+        }else if(waitTime <= 25){
+            txt.setText("Wait time is very long");
+        }else{
+            txt.setText("Wait time not reported");
+        }
+
+        RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
+        //CardView card1 = (CardView) findViewById(R.id.card1);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rv.setLayoutManager(layoutManager);
+        Bite b1 = new Bite(30000, "Liana Alvarez", "This place sucks", 3);
+        Bite b2 = new Bite(294190, "David Greene", "I like chipotle", 5);
+        ArrayList<Bite> biteData = new ArrayList<Bite>();
+
+        biteData.add(b1);
+        biteData.add(b2);
+
+        RVAdapter adapter = new RVAdapter(biteData);
+        rv.setAdapter(adapter);
+
+        //card1.setElevation(3);
+
+
+
+
 
         //needs to be in an asycn task to avoid NetworkOnMainThreadException
         new GetBusinessData().execute(restaurantID);
@@ -87,6 +146,8 @@ public class RestaurantProfile extends AppCompatActivity {
 
 
         }
+
+
     }
 
 

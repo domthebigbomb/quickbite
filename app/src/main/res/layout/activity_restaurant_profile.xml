@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -22,7 +23,7 @@
                 android:scaleType="centerCrop"
                 android:layout_width="wrap_content"
                 android:layout_height="160dp"
-                android:background="#55ff0000"
+                android:background="#D5D5D5"
                 android:layout_span="2" />
         </TableRow>
 
@@ -30,7 +31,7 @@
             <RelativeLayout
                 android:paddingTop="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="75dp">
             <ImageView
                 android:id="@+id/placeimage"
                 android:src="@drawable/ic_place_icon"
@@ -42,9 +43,8 @@
 
                 <TextView
                     android:id="@+id/name"
-                    android:text="Name"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="35dp"
                     android:padding="3dip"
                     android:textSize="20dp"
                     android:layout_toRightOf="@id/placeimage"
@@ -55,9 +55,8 @@
                 <TextView
                     android:id="@+id/address"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:padding="3dip"
-                    android:text="Address"
                     android:layout_below="@+id/name"
                     android:layout_toRightOf="@id/placeimage"
                     android:textSize="15dp"
@@ -66,7 +65,10 @@
             </RelativeLayout>
         </TableRow>
 
-
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2px"
+            android:background="#D5D5D5"/>
 
         <TableRow>
             <TextView
@@ -76,24 +78,65 @@
                 android:padding="16dp"
                 android:drawableLeft="@drawable/ic_action_name"
                 android:drawablePadding="16dp"
-
-                android:text="Phone"
                 android:textSize="20dp"
                 android:textColor="#000000" />
 
         </TableRow>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2px"
+            android:background="#D5D5D5"/>
 
         <TableRow>
             <TextView
                 android:id="@+id/service"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:padding="3dip"
-                android:text="Service is awesome!"
+                android:layout_height="60dp"
+                android:padding="16dp"
+                android:drawablePadding="16dp"
                 android:textSize="20dp"
                 android:textColor="#000000" />
-
         </TableRow>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2px"
+            android:background="#D5D5D5"/>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/waitTime"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:padding="16dp"
+                android:drawableLeft="@drawable/ic_clock"
+                android:drawablePadding="16dp"
+                android:textSize="20dp"
+                android:textColor="#000000" />
+        </TableRow>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2px"
+            android:background="#D5D5D5"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rv"
+                />
+
+
+
+        </RelativeLayout>
 
 
     </TableLayout>
