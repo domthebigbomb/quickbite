@@ -105,27 +105,27 @@ public class ComposeBiteActivity extends AppCompatActivity {
         }
     }
 
-    protected void selectVeryDissatisfied(View view) {
+    public void selectVeryDissatisfied(View view) {
         sentimentIndex = 0;
         updateSentiments();
     }
 
-    protected void selectDissatisfied(View view) {
+    public void selectDissatisfied(View view) {
         sentimentIndex = 1;
         updateSentiments();
     }
 
-    protected void selectNeutral(View view) {
+    public void selectNeutral(View view) {
         sentimentIndex = 2;
         updateSentiments();
     }
 
-    protected void selectSatisfied(View view) {
+    public void selectSatisfied(View view) {
         sentimentIndex = 3;
         updateSentiments();
     }
 
-    protected void selectVerySatisfied(View view) {
+    public void selectVerySatisfied(View view) {
         sentimentIndex = 4;
         updateSentiments();
     }
