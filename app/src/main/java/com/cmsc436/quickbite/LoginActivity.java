@@ -95,6 +95,9 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        // Updates the current user
+        ((MyApplication) this.getApplication()).setUsername(username);
+
         // Create a handler to handle the result of the authentication
         final Firebase.AuthResultHandler authResultHandler = new Firebase.AuthResultHandler() {
             @Override
