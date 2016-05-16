@@ -30,8 +30,6 @@ import java.util.List;
 import retrofit.Call;
 import retrofit.Response;
 
-//import com.cmsc436.quickbite.tabbedview.R;
-
 public class RestaurantProfile extends AppCompatActivity {
 
     String consumerKey = "0YxBV-Axpu7Z0XD2pp91jg";
