@@ -89,7 +89,6 @@ public class RestaurantProfile extends DrawerActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(layoutManager);
 
-
         biteData = new ArrayList<Bite>();
 
         // Get a database reference to our posts
@@ -170,7 +169,7 @@ public class RestaurantProfile extends DrawerActivity {
         protected void onPostExecute(Response<Business> result) {
             TextView address = (TextView) findViewById(R.id.address);
             List a = result.body().location().displayAddress();
-            address.setText((String) a.get(0));
+            address.setText(a.get(0) + " " + a.get(1));
             //address.append((String) a.get(1));
             TextView phone = (TextView) findViewById(R.id.phone);
             phone.setText(result.body().displayPhone());
