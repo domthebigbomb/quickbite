@@ -7,15 +7,17 @@ public class RowItem {
 	 private String address;
 	 private String distance;
 	 private String location_id;
+	 private long waitTime;
 
 	 public RowItem(String location_name, int icon_id, String address,
-	   String distance, String location_id ) {
+	   String distance, String location_id, long waitTime) {
 
 	  this.location_name = location_name;
 	  this.icon_id = icon_id;
 	  this.address = address;
 	  this.distance = distance;
 		 this.location_id = location_id;
+		 this.waitTime = waitTime;
 	 }
 
 	 public String getlocation_name() {
@@ -56,6 +58,14 @@ public class RowItem {
 
 	public void setLocation_id(String location_id) {
 		this.location_id = location_id;
+	}
+
+	public long getWaitTime() {
+		return waitTime;
+	}
+
+	public void setWaitTime(long waitTime) {
+		this.waitTime = waitTime;
 	}
 
 	}

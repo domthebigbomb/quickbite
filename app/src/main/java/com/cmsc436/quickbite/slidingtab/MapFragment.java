@@ -3,6 +3,7 @@ package com.cmsc436.quickbite.slidingtab;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -11,12 +12,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cmsc436.quickbite.R;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -26,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -71,6 +78,7 @@ public class MapFragment extends Fragment implements GoogleApiClient.ConnectionC
     YelpAPI yelpAPI = apiFactory.createAPI();
     Map<String, String> params = new HashMap<>();
     ArrayList<Business> nearbyLocations = new ArrayList<Business>();
+    Firebase fb;
 
 
 
@@ -88,14 +96,6 @@ public class MapFragment extends Fragment implements GoogleApiClient.ConnectionC
             return new ArrayList<>();
         }
 
-      /*  @Override
-        protected void onPostExecute(ArrayList<Business> b) {
-            for (int i = 1; i < 15; i++) {
-                Log.d("Yelp Data", (b.get(i).name()) + b.get(i).location().coordinate().latitude() + b.get(i).location().coordinate().longitude());
-
-            }
-
-        }*/
     }
 
 
@@ -140,7 +140,7 @@ public class MapFragment extends Fragment implements GoogleApiClient.ConnectionC
         if (mSupportMapFragment != null) {
             mSupportMapFragment.getMapAsync(new OnMapReadyCallback() {
                 @Override
-                public void onMapReady(GoogleMap googleMap) {
+                public void onMapReady(final GoogleMap googleMap) {
                     if (googleMap != null) {
 
                         googleMap.getUiSettings().setAllGesturesEnabled(true);
@@ -164,9 +164,6 @@ public class MapFragment extends Fragment implements GoogleApiClient.ConnectionC
                         CameraPosition position = CameraPosition.builder().target(cur).zoom(13f).build();
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(position);
                         googleMap.moveCamera(cameraUpdate);
-                        //googleMap.addMarker(new MarkerOptions().position(new LatLng(38.980481, -76.937557)).title("RJ Bentley's").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                        //googleMap.addMarker(new MarkerOptions().position(new LatLng(38.980664, -76.937573)).title("Cornerstone").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-                        //googleMap.addMarker(new MarkerOptions().position(new LatLng(38.980337, -76.938915)).title("Chipotle").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                         // general params
                         //search food, return 3 results
                         params.put("term", "food");
@@ -189,9 +186,32 @@ public class MapFragment extends Fragment implements GoogleApiClient.ConnectionC
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         }
-
                         for (int i = 0; i < nearbyLocations.size(); i++) {
-                            googleMap.addMarker(new MarkerOptions().position(new LatLng(nearbyLocations.get(i).location().coordinate().latitude(), nearbyLocations.get(i).location().coordinate().longitude())).title(nearbyLocations.get(i).name()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                            final LatLng loc= new LatLng(nearbyLocations.get(i).location().coordinate().latitude(), nearbyLocations.get(i).location().coordinate().longitude());
+                            final String locName = nearbyLocations.get(i).name();
+                            fb = new Firebase("https://quick-bite.firebaseio.com/").child(nearbyLocations.get(i).id()).child("waitTime");
+                            fb.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.getValue() == null) {
+                                        googleMap.addMarker(new MarkerOptions().position(loc).title(locName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                                    } else if ((long) dataSnapshot.getValue() < 36000) {
+                                        googleMap.addMarker(new MarkerOptions().position(loc).title(locName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                                    } else if ((long) dataSnapshot.getValue() > 108000) {
+                                        googleMap.addMarker(new MarkerOptions().position(loc).title(locName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                                    } else {
+                                        googleMap.addMarker(new MarkerOptions().position(loc).title(locName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+                                    Toast.makeText(getContext(), "Can't read your data!", Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+                            //Log.d("WaitcheckHUE", locMap.get(nearbyLocations.get(i).id()));
+                            //googleMap.addMarker(new MarkerOptions().position(new LatLng(nearbyLocations.get(i).location().coordinate().latitude(), nearbyLocations.get(i).location().coordinate().longitude())).title(nearbyLocations.get(i).name()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
                         }
                         /*for (int i = 1; i < 15; i++) {
                             Log.d("In the proper place!", (nearbyLocations.get(i).name()) + nearbyLocations.get(i).location().coordinate().latitude() + nearbyLocations.get(i).location().coordinate().longitude());
