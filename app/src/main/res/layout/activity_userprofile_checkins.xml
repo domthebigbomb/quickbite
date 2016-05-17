@@ -1,64 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
-    <TableLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
         android:background="#FFFFFF"
-        android:stretchColumns="1, 2, 3">
+        app:cardCornerRadius="2dp"
+        app:contentPadding="5dp">
 
-        <TableRow
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <ImageView
-                android:layout_column="1"
-                android:layout_width="35dip"
-                android:layout_height="35dip"
-                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:id="@+id/checkIn_1_img"
+                android:layout_width="31dip"
+                android:layout_height="31dip"
                 android:src="@drawable/ic_map_marker_yellow"
-                android:padding="3dip" />
+                android:padding="3dip"
+                android:layout_alignParentLeft="true"/>
+
+            <RelativeLayout
+                android:id="@+id/checkIn_1_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="3dip"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/checkIn_1_img">
+
+                <TextView
+                    android:id="@+id/checkIn_1_restaurant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Qdoba"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7356 Baltimore Ave"
+                    android:layout_below="@+id/checkIn_1_restaurant"/>
+
+            </RelativeLayout>
 
             <TextView
-                android:layout_column="2"
-                android:text="Chipotle"
-                android:layout_gravity="left|center_horizontal|center_vertical"
-                android:padding="3dip" />
-
-            <TextView
-                android:layout_column="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Today"
-                android:layout_gravity="right|center_horizontal|center_vertical"
-                android:padding="3dip" />
-        </TableRow>
+                android:padding="3dip"
+                android:layout_toRightOf="@+id/checkIn_1_desc"
+                android:gravity="right" />
 
-        <TableRow
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="#FFFFFF"
+        app:cardCornerRadius="2dp"
+        app:contentPadding="5dp">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <ImageView
-                android:layout_column="1"
-                android:layout_width="35dip"
-                android:layout_height="35dip"
-                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:id="@+id/checkIn_2_img"
+                android:layout_width="31dip"
+                android:layout_height="31dip"
                 android:src="@drawable/ic_map_marker_green"
-                android:padding="3dip" />
+                android:padding="3dip"
+                android:layout_alignParentLeft="true"/>
+
+            <RelativeLayout
+                android:id="@+id/checkIn_2_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="3dip"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/checkIn_2_img">
+
+                <TextView
+                    android:id="@+id/checkIn_2_restaurant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Qdoba"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7356 Baltimore Ave"
+                    android:layout_below="@+id/checkIn_2_restaurant"/>
+
+            </RelativeLayout>
 
             <TextView
-                android:layout_column="2"
-                android:text="Qdoba"
-                android:layout_gravity="left|center_horizontal|center_vertical"
-                android:padding="3dip" />
-
-            <TextView
-                android:layout_column="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Yesterday"
-                android:layout_gravity="right|center_horizontal|center_vertical"
-                android:padding="3dip" />
-        </TableRow>
+                android:padding="3dip"
+                android:layout_toRightOf="@+id/checkIn_2_desc"
+                android:gravity="right" />
 
-    </TableLayout>
+        </RelativeLayout>
 
-</RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="#FFFFFF"
+        app:cardCornerRadius="2dp"
+        app:contentPadding="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/checkIn_3_img"
+                android:layout_width="31dip"
+                android:layout_height="31dip"
+                android:src="@drawable/ic_map_marker_red"
+                android:padding="3dip"
+                android:layout_alignParentLeft="true"/>
+
+            <RelativeLayout
+                android:id="@+id/checkIn_3_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="3dip"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/checkIn_3_img">
+
+                <TextView
+                    android:id="@+id/checkIn_3_restaurant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Ritas"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7929 Baltimore Ave"
+                    android:layout_below="@+id/checkIn_3_restaurant"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Feb 29"
+                android:padding="3dip"
+                android:layout_toRightOf="@+id/checkIn_3_desc"
+                android:gravity="right" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
