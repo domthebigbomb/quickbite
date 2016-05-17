@@ -5,14 +5,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cmsc436.quickbite.Bite;
@@ -50,6 +54,9 @@ public class RestaurantProfile extends DrawerActivity {
     private String restaurantName;
     ArrayList<Bite> biteData;
     int serviceRating = 0;
+    float mLastY = 0;
+
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,8 @@ public class RestaurantProfile extends DrawerActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         configureDrawer();
 
+        fab = (FloatingActionButton) findViewById(R.id.checkinFab);
+
         Bundle bundle = getIntent().getExtras();
         restaurantID = bundle.getString(LocationList.restaurantIDKey);
         restaurantName = bundle.getString(LocationList.restaurantNameKey);
@@ -71,6 +80,38 @@ public class RestaurantProfile extends DrawerActivity {
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(restaurantName);
 
+        final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
+
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_SCROLL:
+                    case MotionEvent.ACTION_MOVE:
+                        final int threashold = 50;
+                        if(mLastY-event.getY()>threashold)
+                        {
+                            // up
+                            mLastY = event.getY();
+                            fab.hide();
+                        }else if(mLastY-event.getY()<-threashold){
+                            // down
+                            mLastY = event.getY();
+                            fab.show();
+                        }
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        mLastY = event.getY();
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP:
+                        fab.show();
+                        break;
+                }
+                return false;
+            }
+        });
 
         /*Get wait time from intent here. Hardcoding for now.*/
         //given as seconds. divide by 60.
