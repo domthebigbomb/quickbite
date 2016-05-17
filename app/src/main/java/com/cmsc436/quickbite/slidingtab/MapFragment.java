@@ -166,9 +166,9 @@ public class MapFragment extends Fragment implements GoogleApiClient.ConnectionC
                         googleMap.moveCamera(cameraUpdate);
                         // general params
                         //search food, return 3 results
-                        params.put("term", "food");
+                        //params.put("term", "food");
                         params.put("term", "restaurants");
-                        params.put("term", "bar");
+                        //params.put("term", "bar");
                         //params.put("term", "Fast Food");
                         params.put("sort", "1");
                         params.put("radius_filter", "3000");

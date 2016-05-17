@@ -10,7 +10,10 @@ import android.widget.TextView;
 import com.cmsc436.quickbite.Bite;
 import com.cmsc436.quickbite.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by lianaalvarez on 5/16/16.
@@ -52,7 +55,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.BiteViewHolder>{
     @Override
     public void onBindViewHolder(BiteViewHolder biteViewHolder, int i) {
         biteViewHolder.name.setText(bites.get(i).getAuthor());
-        biteViewHolder.time.setText(Long.toString(bites.get(i).getTimestamp()));
+
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm:a", Locale.US);
+        Date date = new Date(bites.get(i).getTimestamp());
+        String text = format.format(date);
+        biteViewHolder.time.setText(text);
         biteViewHolder.review.setText(bites.get(i).getContent());
     }
 

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< 778864f09afe0c1a3e831fa4c6ba59d68c71fb35
 <module external.linked.project.id=":app" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="quickbitehelp" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+=======
+<module external.linked.project.id=":app" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="quickbiteL" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+>>>>>>> Restaurant changes
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
@@ -123,8 +127,13 @@
     <orderEntry type="library" exported="" name="play-services-wearable-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-base-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-measurement-8.4.0" level="project" />
+<<<<<<< 778864f09afe0c1a3e831fa4c6ba59d68c71fb35
     <orderEntry type="library" exported="" name="okhttp-2.7.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-client-jvm-2.5.2" level="project" />
+=======
+    <orderEntry type="library" exported="" name="firebase-client-jvm-2.5.2" level="project" />
+    <orderEntry type="library" exported="" name="okhttp-2.7.0" level="project" />
+>>>>>>> Restaurant changes
     <orderEntry type="library" exported="" name="play-services-vision-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-wallet-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.4.0" level="project" />
