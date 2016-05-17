@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TimePicker;
 
 import com.cmsc436.quickbite.slidingtab.ListElements.LocationList;
+import com.cmsc436.quickbite.slidingtab.ListElements.RestaurantProfile;
 import com.firebase.client.Firebase;
 
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class TimerActivity extends AppCompatActivity {
+    private Firebase fb = new Firebase("https://quick-bite.firebaseio.com/");
     private boolean isTimerRunning = false;
     private int elapsedTime = 0;
     private Timer timer;
@@ -29,6 +31,7 @@ public class TimerActivity extends AppCompatActivity {
     private Firebase waitRef;
     private String restaurantID;
     private String restaurantName;
+    private String address;
 
     public Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -61,6 +64,7 @@ public class TimerActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         restaurantID = bundle.getString(LocationList.restaurantIDKey);
         restaurantName = bundle.getString(LocationList.restaurantNameKey);
+        address = bundle.getString(RestaurantProfile.addressKey);
 
         waitRef = new Firebase("https://quick-bite.firebaseio.com/").child(restaurantID).child("waitTime");
     }
@@ -129,6 +133,9 @@ public class TimerActivity extends AppCompatActivity {
     // Submit current time and show next activity
     public void submitTime(View view) {
         waitRef.setValue(elapsedTime);
+        User currUser = ((MyApplication) this.getApplication()).getCurrentUser();
+        Firebase userRef = fb.child("checkIns").child(currUser.getUid()).push();
+        userRef.setValue(new CheckIn(elapsedTime, restaurantName, address));
 
         Intent biteIntent = new Intent(this, ComposeBiteActivity.class);
         biteIntent.putExtra(LocationList.restaurantIDKey, restaurantID);
