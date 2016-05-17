@@ -2,7 +2,9 @@ package com.cmsc436.quickbite.tabbedview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -41,10 +43,21 @@ public class MainActivity extends DrawerActivity {
     private CharSequence Titles[] = {"List", "Map"};
     int numOfTabs = 2;
 
+    SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // Checks if user is logged-in
+        if(prefs.getString("logged-in","false").equals("false")) {
+            Intent logInIntent = new Intent(MainActivity.this, LoginActivity.class);
+            MainActivity.this.startActivity(logInIntent);
+        }
+
         mDrawerList = (ListView) findViewById(R.id.navList);
         mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
         dUserName = (TextView) findViewById(R.id.userName);
