@@ -60,6 +60,7 @@ public class RestaurantProfile extends DrawerActivity {
     int serviceRating = 0;
     float mLastY = 0;
     private RVAdapter adapter;
+    private long waitTime;
 
     private FloatingActionButton fab;
     private RelativeLayout.LayoutParams imageParams;
@@ -83,7 +84,7 @@ public class RestaurantProfile extends DrawerActivity {
         Bundle bundle = getIntent().getExtras();
         restaurantID = bundle.getString(LocationList.restaurantIDKey);
         restaurantName = bundle.getString(LocationList.restaurantNameKey);
-        long waitTime = bundle.getLong(LocationList.waitKey);
+        waitTime = bundle.getLong(LocationList.waitKey);
 
         getSupportActionBar().setTitle(restaurantName);
 //        TextView name = (TextView) findViewById(R.id.name);
@@ -297,6 +298,7 @@ public class RestaurantProfile extends DrawerActivity {
         checkInIntent.putExtra(LocationList.restaurantIDKey, restaurantID);
         checkInIntent.putExtra(LocationList.restaurantNameKey, restaurantName);
         checkInIntent.putExtra(RestaurantProfile.addressKey, address);
+        checkInIntent.putExtra(LocationList.waitKey, waitTime);
         startActivity(checkInIntent);
     }
 }

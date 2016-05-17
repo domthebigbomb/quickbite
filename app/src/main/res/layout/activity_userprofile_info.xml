@@ -13,6 +13,7 @@
             <TextView
                 android:layout_column="1"
                 android:text="Score"
+                android:textSize="18dp"
                 android:padding="3dip" />
         </TableRow>
 
@@ -32,14 +33,16 @@
             <TextView
                 android:layout_column="2"
                 android:text="Rank"
+                android:textSize="18dp"
                 android:layout_gravity="left|center_horizontal|center_vertical"
                 android:padding="3dip" />
 
             <TextView
                 android:layout_column="3"
                 android:text="178"
+                android:textSize="18dp"
                 android:layout_gravity="right|center_horizontal|center_vertical"
-                android:padding="3dip" />
+                android:padding="16dip"/>
         </TableRow>
 
         <TableRow
@@ -58,20 +61,23 @@
             <TextView
                 android:layout_column="2"
                 android:text="Points"
+                android:textSize="18dp"
                 android:layout_gravity="left|center_horizontal|center_vertical"
                 android:padding="3dip" />
 
             <TextView
                 android:layout_column="3"
                 android:text="15000"
+                android:textSize="18dp"
                 android:layout_gravity="right|center_horizontal|center_vertical"
-                android:padding="3dip" />
+                android:padding="16dip" />
         </TableRow>
 
         <TableRow>
             <TextView
                 android:layout_column="1"
                 android:text="Favorites"
+                android:textSize="18dp"
                 android:padding="3dip" />
         </TableRow>
 
@@ -81,15 +87,17 @@
 
             <ImageView
                 android:layout_column="1"
-                android:layout_width="35dip"
-                android:layout_height="35dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="left|center_horizontal|center_vertical"
                 android:src="@drawable/ic_map_marker_yellow"
-                android:padding="3dip" />
+                android:padding="3dip"
+                android:layout_marginStart="16dp"/>
 
             <TextView
                 android:layout_column="2"
                 android:text="Chipotle"
+                android:textSize="18dp"
                 android:layout_gravity="left|center_horizontal|center_vertical"
                 android:padding="3dip" />
         </TableRow>
@@ -100,15 +108,17 @@
 
             <ImageView
                 android:layout_column="1"
-                android:layout_width="35dip"
-                android:layout_height="35dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="left|center_horizontal|center_vertical"
                 android:src="@drawable/ic_map_marker_green"
-                android:padding="3dip" />
+                android:padding="3dip"
+                android:layout_marginStart="16dp"/>
 
             <TextView
                 android:layout_column="2"
                 android:text="Qdoba"
+                android:textSize="18dp"
                 android:layout_gravity="left|center_horizontal|center_vertical"
                 android:padding="3dip" />
         </TableRow>

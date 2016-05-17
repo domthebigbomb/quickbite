@@ -51,10 +51,10 @@
 
             <ImageView
                 android:id="@+id/avatar"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_launcher"
-                android:layout_marginTop="15dp" />
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@mipmap/ic_prof_pic"
+                android:layout_centerVertical="true" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
