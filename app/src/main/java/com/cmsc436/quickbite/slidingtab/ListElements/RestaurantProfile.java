@@ -5,14 +5,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmsc436.quickbite.Bite;
+import com.cmsc436.quickbite.DrawerActivity;
 import com.cmsc436.quickbite.R;
 import com.cmsc436.quickbite.TimerActivity;
 import com.firebase.client.DataSnapshot;
@@ -34,8 +38,7 @@ import java.util.List;
 import retrofit.Call;
 import retrofit.Response;
 
-public class RestaurantProfile extends AppCompatActivity {
-
+public class RestaurantProfile extends DrawerActivity {
     String consumerKey = "0YxBV-Axpu7Z0XD2pp91jg";
     String consumerSecret = "6GRuyklo0qJcODC9vuUjYo2uvVg";
     String token = "QLWLjZ0_7ltM0TuumUk8U2m6rcsNYXQy";
@@ -53,30 +56,36 @@ public class RestaurantProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_profile);
 
+        mDrawerList = (ListView) findViewById(R.id.navList);
+        mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
+        dUserName = (TextView) findViewById(R.id.userName);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        configureDrawer();
+
         Bundle bundle = getIntent().getExtras();
         restaurantID = bundle.getString(LocationList.restaurantIDKey);
         restaurantName = bundle.getString(LocationList.restaurantNameKey);
+        long waitTime = bundle.getLong(LocationList.waitKey);
 
         getSupportActionBar().setTitle(restaurantName);
-        TextView name = (TextView)findViewById(R.id.name);
+        TextView name = (TextView) findViewById(R.id.name);
         name.setText(restaurantName);
 
 
         /*Get wait time from intent here. Hardcoding for now.*/
         //given as seconds. divide by 60.
-        int waitTime = 30;
-        TextView txt = (TextView)findViewById(R.id.waitTime);
-        if(waitTime == -1){
+        TextView txt = (TextView) findViewById(R.id.waitTime);
+        if (waitTime == -1) {
             txt.setText(getString(R.string.noTime));
-        }else if(waitTime <= 10){
+        } else if (waitTime <= 10 * 60) {
             txt.setText(getString(R.string.s));
-        }else if(waitTime <= 30){
+        } else if (waitTime <= 30 * 60) {
             txt.setText(getString(R.string.ok));
-        }else if(waitTime > 30){
+        } else {
             txt.setText(getString(R.string.l));
         }
 
-        RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
+        RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(layoutManager);
 
@@ -98,8 +107,7 @@ public class RestaurantProfile extends AppCompatActivity {
 
                 /*Initialize service rating*/
                 TextView service = (TextView) findViewById(R.id.service);
-                if(biteData.size() != 0) {
-
+                if (biteData.size() != 0) {
                     serviceRating = serviceRating / biteData.size();
                     if (serviceRating == 1) {
                         service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_very_dissatisfied), null, null, null);
@@ -120,7 +128,7 @@ public class RestaurantProfile extends AppCompatActivity {
                         service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_neutral), null, null, null);
                         service.setText(getString(R.string.other));
                     }
-                }else{
+                } else {
                     service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_neutral), null, null, null);
                     service.setText(getString(R.string.other));
                 }
@@ -132,13 +140,17 @@ public class RestaurantProfile extends AppCompatActivity {
             }
         });
 
-
         RVAdapter adapter = new RVAdapter(biteData);
         rv.setAdapter(adapter);
 
         //needs to be in an asycn task to avoid NetworkOnMainThreadException
         new GetBusinessData().execute(restaurantID);
+    }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 
     private class GetBusinessData extends AsyncTask<String, Void, Response<Business>> {
@@ -154,12 +166,13 @@ public class RestaurantProfile extends AppCompatActivity {
             }
             return response;
         }
+
         protected void onPostExecute(Response<Business> result) {
-            TextView address = (TextView)findViewById(R.id.address);
+            TextView address = (TextView) findViewById(R.id.address);
             List a = result.body().location().displayAddress();
-            address.setText((String)a.get(0));
+            address.setText((String) a.get(0));
             //address.append((String) a.get(1));
-            TextView phone = (TextView)findViewById(R.id.phone);
+            TextView phone = (TextView) findViewById(R.id.phone);
             phone.setText(result.body().displayPhone());
             String imageURL = result.body().imageUrl();
             //changing image from "ms.jpg" to "l.jpg" so that we get a higher resolution image & dont have to crop/zoom in as much.
@@ -167,7 +180,6 @@ public class RestaurantProfile extends AppCompatActivity {
             new getImage().execute(largeimageURL);
         }
     }
-
 
     private class getImage extends AsyncTask<String, Void, Bitmap> {
         @Override
@@ -182,7 +194,7 @@ public class RestaurantProfile extends AppCompatActivity {
         // Sets the Bitmap returned by doInBackground
         @Override
         protected void onPostExecute(Bitmap result) {
-            ImageView imageView = (ImageView)findViewById(R.id.image);
+            ImageView imageView = (ImageView) findViewById(R.id.image);
             imageView.setImageBitmap(result);
         }
 
