@@ -188,6 +188,8 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 
                         } else if (wait > 1800) {
                             resId = 2;
+                        } else {
+                            return;
                         }
                         rowItems.get(idx).setWaitTime(wait);
                         rowItems.get(idx).seticon_id(icon_pics.getResourceId(resId, -1));
