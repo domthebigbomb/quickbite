@@ -7,6 +7,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_userprofile">User Profile</string>
+    <string name="drawer_open">opened</string>
+    <string name="drawer_close">closed</string>
     <!--user-unique strings-->
     <string name="profile_username_label">Username Here</string>
 

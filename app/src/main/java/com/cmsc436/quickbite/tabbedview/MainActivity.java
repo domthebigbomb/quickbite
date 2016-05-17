@@ -8,7 +8,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,6 +25,7 @@ import com.cmsc436.quickbite.LoginActivity;
 import com.cmsc436.quickbite.MyApplication;
 import com.cmsc436.quickbite.R;
 import com.cmsc436.quickbite.TimerActivity;
+import com.cmsc436.quickbite.UserProfileActivity;
 import com.cmsc436.quickbite.slidingtab.slider.SlidingTabLayout;
 import com.firebase.client.Firebase;
 
@@ -49,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Hamburger icon support
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Drawer items
         mNavItems.add(new NavItem("Check In", R.drawable.ic_action_place));
         mNavItems.add(new NavItem("Favorites", R.drawable.ic_action_important));
@@ -72,6 +79,25 @@ public class MainActivity extends AppCompatActivity {
             dUserName.setText(curr_user);
         }
 
+        // Implements nav-bar open/close listener
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+
+                invalidateOptionsMenu();
+            }
+        };
+        // Adds the listener
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+
         // Removes the ListView dividers
         mDrawerList.setDivider(null);
 
@@ -82,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Handles My Profile
                 if(position==4) {
-                    Intent profileIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent profileIntent = new Intent(MainActivity.this, UserProfileActivity.class);
                     MainActivity.this.startActivity(profileIntent);
                 }
             }
@@ -100,6 +126,37 @@ public class MainActivity extends AppCompatActivity {
         tabs.setDistributeEvenly(true);
         tabs.setViewPager(pager);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle
+        // If it returns true, then it has handled
+        // the nav drawer indicator touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        // Handle your other action bar items...
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    /*
+    // Called when invalidateOptionsMenu() is invoked
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.action_search).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
+    */
 
     class NavItem {
         String mTitle;
