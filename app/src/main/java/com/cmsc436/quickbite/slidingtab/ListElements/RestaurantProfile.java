@@ -45,6 +45,7 @@ import retrofit.Call;
 import retrofit.Response;
 
 public class RestaurantProfile extends DrawerActivity {
+    public static String addressKey = "address";
     String consumerKey = "0YxBV-Axpu7Z0XD2pp91jg";
     String consumerSecret = "6GRuyklo0qJcODC9vuUjYo2uvVg";
     String token = "QLWLjZ0_7ltM0TuumUk8U2m6rcsNYXQy";
@@ -54,6 +55,7 @@ public class RestaurantProfile extends DrawerActivity {
     Response<Business> response;
     private String restaurantID;
     private String restaurantName;
+    private String address;
     ArrayList<Bite> biteData;
     int serviceRating = 0;
     float mLastY = 0;
@@ -219,9 +221,10 @@ public class RestaurantProfile extends DrawerActivity {
         }
 
         protected void onPostExecute(Response<Business> result) {
-            TextView address = (TextView) findViewById(R.id.address);
+            TextView addressView = (TextView) findViewById(R.id.address);
             List a = result.body().location().displayAddress();
-            address.setText(a.get(0) + " " + a.get(1));
+            address = a.get(0) + " " + a.get(1);
+            addressView.setText(address);
             //address.append((String) a.get(1));
             TextView phone = (TextView) findViewById(R.id.phone);
             phone.setText(result.body().displayPhone());
@@ -293,6 +296,7 @@ public class RestaurantProfile extends DrawerActivity {
         Intent checkInIntent = new Intent(this, TimerActivity.class);
         checkInIntent.putExtra(LocationList.restaurantIDKey, restaurantID);
         checkInIntent.putExtra(LocationList.restaurantNameKey, restaurantName);
+        checkInIntent.putExtra(RestaurantProfile.addressKey, address);
         startActivity(checkInIntent);
     }
 }

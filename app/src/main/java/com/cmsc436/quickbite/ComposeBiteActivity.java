@@ -17,13 +17,14 @@ import com.cmsc436.quickbite.slidingtab.ListElements.LocationList;
 import com.firebase.client.Firebase;
 
 public class ComposeBiteActivity extends AppCompatActivity {
+    private Firebase fb = new Firebase("https://quick-bite.firebaseio.com/");
     private EditText reviewText;
     private TextView charCountView;
     private Button postButton;
     private int sentimentIndex = 3;
     private Firebase restaurantRef;
-    private String author = "Anon";
     private User user;
+    private String restaurantName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class ComposeBiteActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String restaurantID = bundle.getString(LocationList.restaurantIDKey);
-        String restaurantName = bundle.getString(LocationList.restaurantNameKey);
+        restaurantName = bundle.getString(LocationList.restaurantNameKey);
 
         TextView placeName = (TextView) findViewById(R.id.place_text);
         placeName.setText(restaurantName);
@@ -40,7 +41,8 @@ public class ComposeBiteActivity extends AppCompatActivity {
         MyApplication app = (MyApplication) getApplication();
         user = app.getCurrentUser();
 
-        restaurantRef = new Firebase("https://quick-bite.firebaseio.com/").child(restaurantID).child("bites");
+        restaurantRef = fb.child(restaurantID).child("bites");
+
         reviewText = (EditText) findViewById(R.id.review_text);
         reviewText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -151,8 +153,13 @@ public class ComposeBiteActivity extends AppCompatActivity {
             return;
         }
         Firebase biteRef = restaurantRef.push();
-        Bite bite = new Bite(System.currentTimeMillis(), user.abbreviatedName(), reviewText.getText().toString(), sentimentIndex + 1);
+        Bite bite = new Bite(System.currentTimeMillis(), user.abbreviatedName(),
+                reviewText.getText().toString(), restaurantName, sentimentIndex + 1);
         biteRef.setValue(bite);
+
+        Firebase userBiteRef = fb.child("bites").child(user.getUid()).push();
+        userBiteRef.setValue(bite);
+
         finish();
     }
 }

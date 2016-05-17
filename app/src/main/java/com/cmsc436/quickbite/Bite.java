@@ -7,15 +7,17 @@ public class Bite {
     private long timestamp;
     private String author;
     private String content;
+    private String placeName;
     private int rating;
 
     public Bite() {
     }
 
-    public Bite(long timestamp, String author, String content, int rating) {
+    public Bite(long timestamp, String author, String content, String placeName, int rating) {
         this.timestamp = timestamp;
         this.author = author;
         this.content = content;
+        this.placeName = placeName;
         this.rating = rating;
     }
 
@@ -29,6 +31,10 @@ public class Bite {
 
     public String getContent() {
         return content;
+    }
+
+    public String getPlaceName() {
+        return placeName;
     }
 
     public long getRating() {

@@ -51,7 +51,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
         // Gets username
         user = ((MyApplication) this.getApplication()).getCurrentUser();
-        UserProfileActivity.username = user.fullName();
+        if (user != null) {
+            UserProfileActivity.username = user.fullName();
+        }
 
         // obtain user data
         if (UserProfileActivity.username == null || UserProfileActivity.username.equals("")) {
