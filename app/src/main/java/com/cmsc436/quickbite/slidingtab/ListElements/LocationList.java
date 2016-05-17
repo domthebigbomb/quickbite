@@ -182,36 +182,29 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 					if (dataSnapshot.getValue() != null && currentBusiness!= null) {
 						 wait = (long) dataSnapshot.getValue();
 
-						if (wait > -1 && wait < 36000) {
+						if (wait > -1 && wait < 600) {
 							resId =0;
 
-						}else if (wait > 36000 && wait < 108000) {
+						}else if (wait > 599 && wait < 1800) {
 							resId = 1;
 
-						} else if (wait > 108000) {
+						} else if (wait > 1800) {
 							resId =2;
-
-						} else {
 
 						}
 
 
-					} else {
 					}
 
 					if (resId != -1) {
 
-					//	for (int z = 0; z < rowItems.size(); z++) {
-						//	if (rowItems.get(z).getLocation_id().equals(itemIn.getLocation_id())) {
+
 								rowItems.get(idx).seticon_id(icon_pics.getResourceId(resId,-1));
                                 rowItems.get(idx).setWaitTime(wait);
 
-								//rowItems.set(idx, itemIn);
 								adapter.notifyDataSetChanged();
-							//	break;
 							}
-						//}
-					//}
+
 				}
 
 				@Override
