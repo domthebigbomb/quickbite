@@ -38,48 +38,28 @@
                 </RelativeLayout>
 
                 <TableLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="240dp"
                     android:background="#ffffff"
-                    android:stretchColumns="1">
+                    android:stretchColumns="1"
+                    android:shrinkColumns="*">
 
                     <TableRow>
-
-                        <RelativeLayout
+                        <TextView
+                            android:id="@+id/address"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:id="@+id/placeimage"
-                                android:layout_width="60dp"
-                                android:layout_height="45dp"
-                                android:layout_centerVertical="true"
-                                android:src="@drawable/ic_place_icon" />
-                            <!--
-                            <TextView
-                                android:id="@+id/name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:layout_toEndOf="@id/placeimage"
-                                android:textColor="#000000"
-                                android:fontFamily="sans-serif-medium"
-                                android:textSize="20dp" />
-                                -->
-                            <TextView
-                                android:id="@+id/address"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_toEndOf="@id/placeimage"
-                                android:autoLink="map"
-                                android:textColor="#9E9E9E"
-                                android:textSize="18dp" />
-
-                        </RelativeLayout>
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="16dp"
+                            android:autoLink="map"
+                            android:drawablePadding="16dp"
+                            android:drawableStart="@drawable/ic_map_marker"
+                            android:gravity="center_vertical"
+                            android:textColor="#9E9E9E"
+                            android:textSize="18dp" />
                     </TableRow>
 
                     <View
@@ -98,7 +78,7 @@
                             android:layout_marginTop="16dp"
                             android:autoLink="phone"
                             android:drawablePadding="16dp"
-                            android:drawableStart="@drawable/ic_action_name"
+                            android:drawableStart="@drawable/ic_phone"
                             android:gravity="center_vertical"
                             android:textColor="#000000"
                             android:textSize="18dp" />
@@ -175,7 +155,7 @@
             android:layout_marginBottom="24dp"
             android:layout_marginEnd="24dp"
             android:onClick="checkIn"
-            android:src="@drawable/ic_map_marker" />
+            android:src="@drawable/ic_map_marker_white" />
     </RelativeLayout>
 
     <!-- The navigation drawer -->

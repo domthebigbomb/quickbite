@@ -44,6 +44,7 @@
         <item>@drawable/ic_map_marker_green</item>
         <item>@drawable/ic_map_marker_amber</item>
         <item>@drawable/ic_map_marker_red</item>
+        <item>@drawable/ic_map_marker_white</item>
     </array>
 
     <!-- Status -->
