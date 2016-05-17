@@ -195,9 +195,9 @@ public class MapFragment extends Fragment implements GoogleApiClient.ConnectionC
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.getValue() == null) {
                                         googleMap.addMarker(new MarkerOptions().position(loc).title(locName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                                    } else if ((long) dataSnapshot.getValue() < 36000) {
+                                    } else if ((long) dataSnapshot.getValue() < 600) {
                                         googleMap.addMarker(new MarkerOptions().position(loc).title(locName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                                    } else if ((long) dataSnapshot.getValue() > 108000) {
+                                    } else if ((long) dataSnapshot.getValue() > 1800) {
                                         googleMap.addMarker(new MarkerOptions().position(loc).title(locName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                                     } else {
                                         googleMap.addMarker(new MarkerOptions().position(loc).title(locName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
