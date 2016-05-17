@@ -38,6 +38,7 @@ public class UserProfileActivity extends AppCompatActivity {
     public Bundle _savedInstanceState = null;
     public static Fragment currLowerFragment = null;
     public static int currLowerFragmentIndex = 0;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,8 @@ public class UserProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar); // Setting toolbar as the ActionBar with setSupportActionBar() call
 
         // Gets username
-        UserProfileActivity.username = ((MyApplication) this.getApplication()).getUsername();
+        user = ((MyApplication) this.getApplication()).getCurrentUser();
+        UserProfileActivity.username = user.fullName();
 
         // obtain user data
         if (UserProfileActivity.username == null || UserProfileActivity.username.equals("")) {

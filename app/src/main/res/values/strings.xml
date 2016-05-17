@@ -42,7 +42,7 @@
     <!-- Pictures -->
     <array name="icon_pics">
         <item>@drawable/ic_map_marker_green</item>
-        <item>@drawable/ic_map_marker_yellow</item>
+        <item>@drawable/ic_map_marker_amber</item>
         <item>@drawable/ic_map_marker_red</item>
     </array>
 

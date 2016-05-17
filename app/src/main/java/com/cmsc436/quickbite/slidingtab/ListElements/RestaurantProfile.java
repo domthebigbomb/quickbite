@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -27,6 +28,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.vision.Frame;
 import com.yelp.clientlib.connection.YelpAPI;
 import com.yelp.clientlib.connection.YelpAPIFactory;
 import com.yelp.clientlib.entities.Business;
@@ -55,8 +57,11 @@ public class RestaurantProfile extends DrawerActivity {
     ArrayList<Bite> biteData;
     int serviceRating = 0;
     float mLastY = 0;
+    private RVAdapter adapter;
 
     private FloatingActionButton fab;
+    private RelativeLayout.LayoutParams imageParams;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,8 @@ public class RestaurantProfile extends DrawerActivity {
         configureDrawer();
 
         fab = (FloatingActionButton) findViewById(R.id.checkinFab);
+        imageView = (ImageView) findViewById(R.id.header_image);
+        imageParams = (RelativeLayout.LayoutParams) findViewById(R.id.header_image).getLayoutParams();
 
         Bundle bundle = getIntent().getExtras();
         restaurantID = bundle.getString(LocationList.restaurantIDKey);
@@ -77,8 +84,8 @@ public class RestaurantProfile extends DrawerActivity {
         long waitTime = bundle.getLong(LocationList.waitKey);
 
         getSupportActionBar().setTitle(restaurantName);
-        TextView name = (TextView) findViewById(R.id.name);
-        name.setText(restaurantName);
+//        TextView name = (TextView) findViewById(R.id.name);
+//        name.setText(restaurantName);
 
         final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
 
@@ -88,14 +95,18 @@ public class RestaurantProfile extends DrawerActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_SCROLL:
+
                     case MotionEvent.ACTION_MOVE:
-                        final int threashold = 50;
-                        if(mLastY-event.getY()>threashold)
+                        imageParams.topMargin = Math.round(scrollView.getY()/2);
+                        imageView.setLayoutParams(imageParams);
+
+                        final int threshold = 50;
+                        if(mLastY-event.getY()>threshold)
                         {
                             // up
                             mLastY = event.getY();
                             fab.hide();
-                        }else if(mLastY-event.getY()<-threashold){
+                        }else if(mLastY-event.getY()<-threshold){
                             // down
                             mLastY = event.getY();
                             fab.show();
@@ -131,6 +142,8 @@ public class RestaurantProfile extends DrawerActivity {
         rv.setLayoutManager(layoutManager);
 
         biteData = new ArrayList<Bite>();
+        adapter = new RVAdapter(biteData);
+        rv.setAdapter(adapter);
 
         // Get a database reference to our posts
         Firebase ref = new Firebase("https://quick-bite.firebaseio.com/").child(restaurantID).child("bites");
@@ -144,6 +157,7 @@ public class RestaurantProfile extends DrawerActivity {
                     serviceRating += b.getRating();
                     biteData.add(0, b);
                 }
+                adapter.notifyDataSetChanged();
 
                 /*Initialize service rating*/
                 TextView service = (TextView) findViewById(R.id.service);
@@ -179,9 +193,6 @@ public class RestaurantProfile extends DrawerActivity {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
-
-        RVAdapter adapter = new RVAdapter(biteData);
-        rv.setAdapter(adapter);
 
         //needs to be in an asycn task to avoid NetworkOnMainThreadException
         new GetBusinessData().execute(restaurantID);
@@ -234,7 +245,7 @@ public class RestaurantProfile extends DrawerActivity {
         // Sets the Bitmap returned by doInBackground
         @Override
         protected void onPostExecute(Bitmap result) {
-            ImageView imageView = (ImageView) findViewById(R.id.image);
+            ImageView imageView = (ImageView) findViewById(R.id.header_image);
             imageView.setImageBitmap(result);
         }
 

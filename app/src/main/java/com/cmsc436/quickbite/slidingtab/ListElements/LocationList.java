@@ -183,22 +183,17 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 						 wait = (long) dataSnapshot.getValue();
 
 						if (wait > -1 && wait < 600) {
-							resId =0;
+							resId = 0;
 
 						}else if (wait > 599 && wait < 1800) {
 							resId = 1;
 
 						} else if (wait > 1800) {
 							resId =2;
-
 						}
-
-
 					}
 
 					if (resId != -1) {
-
-
 								rowItems.get(idx).seticon_id(icon_pics.getResourceId(resId,-1));
                                 rowItems.get(idx).setWaitTime(wait);
 
