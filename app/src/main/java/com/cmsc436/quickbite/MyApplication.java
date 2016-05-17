@@ -8,14 +8,14 @@ import com.firebase.client.Firebase;
 
 public class MyApplication extends android.app.Application {
 
-    public String username; // Current user
+    private User currentUser; // Current user
 
-    public String getUsername() {
-        return username;
+    public User getCurrentUser() {
+        return currentUser;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser(User user) {
+        this.currentUser = user;
     }
 
     @Override

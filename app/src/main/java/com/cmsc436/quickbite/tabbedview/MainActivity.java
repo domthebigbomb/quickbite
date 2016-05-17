@@ -1,24 +1,11 @@
 package com.cmsc436.quickbite.tabbedview;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,15 +14,15 @@ import com.cmsc436.quickbite.DrawerActivity;
 import com.cmsc436.quickbite.LoginActivity;
 import com.cmsc436.quickbite.MyApplication;
 import com.cmsc436.quickbite.R;
-import com.cmsc436.quickbite.TimerActivity;
-import com.cmsc436.quickbite.UserProfileActivity;
+import com.cmsc436.quickbite.User;
 import com.cmsc436.quickbite.slidingtab.slider.SlidingTabLayout;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-
-import java.util.ArrayList;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 public class MainActivity extends DrawerActivity {
-    //final Firebase fb = new Firebase("https://quick-bite.firebaseio.com/");
+    private Firebase fb = new Firebase("https://quick-bite.firebaseio.com/");
 
     private ViewPager pager;
     private ViewPagerAdapter adapter;
@@ -45,6 +32,8 @@ public class MainActivity extends DrawerActivity {
 
     SharedPreferences prefs;
 
+    private MyApplication app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +41,27 @@ public class MainActivity extends DrawerActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+        app = (MyApplication) this.getApplication();
+
         // Checks if user is logged-in
         if(prefs.getString("logged-in","false").equals("false")) {
             Intent logInIntent = new Intent(MainActivity.this, LoginActivity.class);
             MainActivity.this.startActivity(logInIntent);
+        } else {
+            String uid = prefs.getString(User.uidKey, "uid");
+            fb.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User existingUser = dataSnapshot.getValue(User.class);
+                    app.setUser(existingUser);
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    Intent logInIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    MainActivity.this.startActivity(logInIntent);
+                }
+            });
         }
 
         mDrawerList = (ListView) findViewById(R.id.navList);
@@ -74,6 +80,12 @@ public class MainActivity extends DrawerActivity {
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true);
         tabs.setViewPager(pager);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateDrawerUser();
     }
 
     @Override

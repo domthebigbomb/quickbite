@@ -26,7 +26,7 @@ import java.util.ArrayList;
 /**
  * Created by dominic on 5/16/16.
  */
-public class DrawerActivity extends AppCompatActivity{
+public class DrawerActivity extends AppCompatActivity {
     // Drawer parameters
     public ListView mDrawerList;
     public RelativeLayout mDrawerPane;
@@ -35,12 +35,22 @@ public class DrawerActivity extends AppCompatActivity{
     public DrawerLayout mDrawerLayout;
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 
+    MyApplication app;
     SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceBundle) {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         super.onCreate(savedInstanceBundle);
+        app = (MyApplication) this.getApplication();
+    }
+
+    public void updateDrawerUser() {
+        String firstName = prefs.getString(User.firstNameKey, "first");
+        String lastName = prefs.getString(User.lastNameKey, "last");
+        if (firstName != null && lastName != null) {
+            dUserName.setText(firstName + " " + lastName);
+        }
     }
 
     protected void configureDrawer() {
@@ -53,16 +63,13 @@ public class DrawerActivity extends AppCompatActivity{
         mNavItems.add(new NavItem("Nearby", R.drawable.ic_action_location_found));
         mNavItems.add(new NavItem("Search", R.drawable.ic_action_search));
         mNavItems.add(new NavItem("My Profile", R.drawable.ic_action_person));
+        mNavItems.add(new NavItem("Logout", R.drawable.ic_power_off));
 
         DrawerListAdapter drawer_adapter = new DrawerListAdapter(this, mNavItems);
         mDrawerList.setAdapter(drawer_adapter);
 
         // Updates drawer username
-        //String curr_user = ((MyApplication) this.getApplication()).getUsername();
-        String curr_user = prefs.getString("curr-user",null);
-        if(curr_user != null) {
-            dUserName.setText(curr_user);
-        }
+        updateDrawerUser();
 
         // Implements nav-bar open/close listener
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
@@ -90,11 +97,24 @@ public class DrawerActivity extends AppCompatActivity{
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 // Handles My Profile
-                if(position==4) {
+                if (position == 4) {
                     Intent profileIntent = new Intent(DrawerActivity.this, UserProfileActivity.class);
                     DrawerActivity.this.startActivity(profileIntent);
+                } else if (position == 5) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("logged-in","false");
+                    editor.apply();
+                    editor.remove(User.uidKey);
+                    editor.remove(User.firstNameKey);
+                    editor.remove(User.lastNameKey);
+                    editor.apply();
+
+                    app.setUser(null);
+
+                    Intent logoutIntent = new Intent(DrawerActivity.this, LoginActivity.class);
+                    DrawerActivity.this.startActivity(logoutIntent);
+                    mDrawerLayout.closeDrawers();
                 }
             }
         });
@@ -157,15 +177,14 @@ public class DrawerActivity extends AppCompatActivity{
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.drawer_item, null);
-            }
-            else {
+            } else {
                 view = convertView;
             }
 
             TextView titleView = (TextView) view.findViewById(R.id.title);
             ImageView iconView = (ImageView) view.findViewById(R.id.icon);
 
-            titleView.setText( mNavItems.get(position).mTitle );
+            titleView.setText(mNavItems.get(position).mTitle);
             iconView.setImageResource(mNavItems.get(position).mIcon);
 
             return view;

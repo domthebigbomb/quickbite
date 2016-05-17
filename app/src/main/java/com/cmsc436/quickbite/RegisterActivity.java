@@ -33,13 +33,25 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private EditText etPasswordConfirm;
+    private EditText etFirstName;
+    private EditText etLastName;
 
     private AlertDialog.Builder builder;
+    private View decorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         registerButton = (Button) findViewById(R.id.bRegister);
         showLoginButton = (Button) findViewById(R.id.bShowLogin);
@@ -48,8 +60,23 @@ public class RegisterActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etPasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
+        etFirstName = (EditText) findViewById(R.id.etFirstName);
+        etLastName = (EditText) findViewById(R.id.etLastName);
 
         builder = new AlertDialog.Builder(RegisterActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
     }
 
     private void enableRegisterViews(boolean enabled) {
@@ -81,8 +108,11 @@ public class RegisterActivity extends AppCompatActivity {
         final String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
         String passwordConfirm = etPasswordConfirm.getText().toString();
-        if(username.length() > 0 && password.length() > 0 && passwordConfirm.length() > 0) {
+        final String firstName = etFirstName.getText().toString();
+        final String lastName = etLastName.getText().toString();
 
+        if(username.length() > 0 && password.length() > 0 && passwordConfirm.length() > 0
+                && firstName.length() > 0 && lastName.length() > 0) {
             if(!password.equals(passwordConfirm)) {
                 // Shows the user an error message
                 // Uses an Animation to fade in/out
@@ -103,8 +133,10 @@ public class RegisterActivity extends AppCompatActivity {
             fb.createUser(username, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
                 @Override
                 public void onSuccess(Map<String, Object> result) {
-                    System.out.println("Successfully created user account with uid: " + result.get("uid"));
+                    String uid = result.get("uid").toString();
+                    //System.out.println("Successfully created user account with uid: " + result.get("uid"));
                     // Returns to login page
+                    fb.child("users").child(uid).setValue( new User(uid, firstName, lastName));
                     showProgressBar(false);
                     Intent intent = new Intent();
                     intent.putExtra(LoginActivity.emailKey, username);

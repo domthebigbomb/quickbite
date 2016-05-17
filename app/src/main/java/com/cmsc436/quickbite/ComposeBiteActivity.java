@@ -23,6 +23,7 @@ public class ComposeBiteActivity extends AppCompatActivity {
     private int sentimentIndex = 3;
     private Firebase restaurantRef;
     private String author = "Anon";
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,9 @@ public class ComposeBiteActivity extends AppCompatActivity {
 
         TextView placeName = (TextView) findViewById(R.id.place_text);
         placeName.setText(restaurantName);
+
+        MyApplication app = (MyApplication) getApplication();
+        user = app.getCurrentUser();
 
         restaurantRef = new Firebase("https://quick-bite.firebaseio.com/").child(restaurantID).child("bites");
         reviewText = (EditText) findViewById(R.id.review_text);
@@ -147,8 +151,7 @@ public class ComposeBiteActivity extends AppCompatActivity {
             return;
         }
         Firebase biteRef = restaurantRef.push();
-        MyApplication app = (MyApplication) getApplication();
-        Bite bite = new Bite(System.currentTimeMillis(), app.getUsername(), reviewText.getText().toString(), sentimentIndex + 1);
+        Bite bite = new Bite(System.currentTimeMillis(), user.abbreviatedName(), reviewText.getText().toString(), sentimentIndex + 1);
         biteRef.setValue(bite);
         finish();
     }
