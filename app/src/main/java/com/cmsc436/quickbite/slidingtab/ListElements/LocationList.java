@@ -182,13 +182,13 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 					if (dataSnapshot.getValue() != null && currentBusiness!= null) {
 						 wait = (long) dataSnapshot.getValue();
 
-						if (wait > -1 && wait < 36000) {
+						if (wait > -1 && wait < 600) {
 							resId =0;
 
-						}else if (wait > 36000 && wait < 108000) {
+						}else if (wait > 599 && wait < 1800) {
 							resId = 1;
 
-						} else if (wait > 108000) {
+						} else if (wait > 1800) {
 							resId =2;
 
 						} else {

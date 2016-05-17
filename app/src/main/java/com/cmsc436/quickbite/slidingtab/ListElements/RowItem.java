@@ -7,10 +7,10 @@ public class RowItem {
 	 private String address;
 	 private String distance;
 	 private String location_id;
-	 private long waitTime;
+	private long waitTime;
 
 	 public RowItem(String location_name, int icon_id, String address,
-	   String distance, String location_id, long waitTime) {
+	   String distance, String location_id, long waitTime ) {
 
 	  this.location_name = location_name;
 	  this.icon_id = icon_id;
