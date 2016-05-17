@@ -48,10 +48,11 @@ public class UserProfileActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar_userprofile);
         setSupportActionBar(toolbar); // Setting toolbar as the ActionBar with setSupportActionBar() call
 
-        UserProfileActivity.username = "Jeremy";
+        // Gets username
+        UserProfileActivity.username = ((MyApplication) this.getApplication()).getUsername();
 
         // obtain user data
-        if (UserProfileActivity.username == "") {
+        if (UserProfileActivity.username == null || UserProfileActivity.username.equals("")) {
             // cannot load user data
             Log.i("username_unknown", "username unknown! cannot load user data");
             return;
