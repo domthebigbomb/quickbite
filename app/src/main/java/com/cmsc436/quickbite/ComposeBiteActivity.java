@@ -147,7 +147,8 @@ public class ComposeBiteActivity extends AppCompatActivity {
             return;
         }
         Firebase biteRef = restaurantRef.push();
-        Bite bite = new Bite(System.currentTimeMillis(), author, reviewText.getText().toString(), sentimentIndex + 1);
+        MyApplication app = (MyApplication) getApplication();
+        Bite bite = new Bite(System.currentTimeMillis(), app.getUsername(), reviewText.getText().toString(), sentimentIndex + 1);
         biteRef.setValue(bite);
         finish();
     }

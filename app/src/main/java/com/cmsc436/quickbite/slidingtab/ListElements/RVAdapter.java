@@ -56,7 +56,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.BiteViewHolder>{
     public void onBindViewHolder(BiteViewHolder biteViewHolder, int i) {
         biteViewHolder.name.setText(bites.get(i).getAuthor());
 
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm:a", Locale.US);
+        SimpleDateFormat format = new SimpleDateFormat("h:mm a", Locale.US);
         Date date = new Date(bites.get(i).getTimestamp());
         String text = format.format(date);
         biteViewHolder.time.setText(text);
