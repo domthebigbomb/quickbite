@@ -2,7 +2,9 @@ package com.cmsc436.quickbite;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,8 +35,11 @@ public class DrawerActivity extends AppCompatActivity{
     public DrawerLayout mDrawerLayout;
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 
+    SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceBundle) {
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         super.onCreate(savedInstanceBundle);
     }
 
@@ -53,7 +58,8 @@ public class DrawerActivity extends AppCompatActivity{
         mDrawerList.setAdapter(drawer_adapter);
 
         // Updates drawer username
-        String curr_user = ((MyApplication) this.getApplication()).getUsername();
+        //String curr_user = ((MyApplication) this.getApplication()).getUsername();
+        String curr_user = prefs.getString("curr-user",null);
         if(curr_user != null) {
             dUserName.setText(curr_user);
         }

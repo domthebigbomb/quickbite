@@ -2,8 +2,10 @@ package com.cmsc436.quickbite;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,10 +42,14 @@ public class LoginActivity extends AppCompatActivity {
     AlphaAnimation outAnimation;
     FrameLayout progressBarHolder;
 
+    SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         loginButton = (Button) findViewById(R.id.bLogin);
         showRegisterButton = (Button) findViewById(R.id.bShowRegister);
@@ -79,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        String username = etUsername.getText().toString();
+        final String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
 
         if (username.length() == 0 || password.length() == 0) {
@@ -103,10 +109,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthenticated(AuthData authData) {
                 // Authenticated successfully with payload authData
-                // For now, sends the user to the TimerActivity
+                // Sends the user to the MainActivity
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("logged-in","true");
+                editor.apply();
+                editor.putString("curr-user",username);
+                editor.apply();
                 showProgressBar(false);
-                Intent loggedInIntent = new Intent(LoginActivity.this, MainActivity.class);
-                LoginActivity.this.startActivity(loggedInIntent);
+                finish();
+                //Intent loggedInIntent = new Intent(LoginActivity.this, MainActivity.class);
+                //LoginActivity.this.startActivity(loggedInIntent);
             }
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
