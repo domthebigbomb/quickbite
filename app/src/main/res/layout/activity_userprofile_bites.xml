@@ -1,68 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
-    <TableLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="1">
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="#FFFFFF"
+        app:cardCornerRadius="5dp"
+        app:contentPadding="5dp">
 
-        <!--temp filler rows-->
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <!-- simple message -->
-        <TableRow>
             <TextView
-                android:layout_column="1"
-                android:text="Bites"
-                android:padding="3dip" />
-            <TextView
-                android:text="Tab"
-                android:gravity="right"
-                android:padding="3dip" />
-        </TableRow>
-    </TableLayout>
+                android:id="@+id/card_1_tb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textStyle="bold"
+                android:text="Chipotle (March 2nd, 6:30 PM)"
+                android:layout_alignParentTop="true"/>
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Line was out the door! Due to free Chipotle coupons, chicken was sold out. Had to wait 10 minutes just to get served."
+                android:layout_below="@+id/card_1_tb"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="#FFFFFF"
+        app:cardCornerRadius="2dp"
+        app:contentPadding="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/card_2_tb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textStyle="bold"
+                android:text="Qdoba (February 15th, 2:35 PM)"
+                android:layout_alignParentTop="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Fast service, great tasting Mexican food, no complaints."
+                android:layout_below="@+id/card_2_tb"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -57,7 +57,7 @@ public class UserProfileActivity extends AppCompatActivity {
         if (UserProfileActivity.username == null || UserProfileActivity.username.equals("")) {
             // cannot load user data
             Log.i("username_unknown", "username unknown! cannot load user data");
-            return;
+            UserProfileActivity.username="Username";
         } else {
             Log.i("username_known", "username loaded correctly");
         }
@@ -86,7 +86,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 if (currLowerFragment != null) {
                     fragmentTransaction.remove(currLowerFragment);
                 }
-                fragmentTransaction.add(R.id.activity_userprofile, fragment);
+                fragmentTransaction.replace(R.id.profile_lowerfragment, fragment);
                 fragmentTransaction.commit();
                 currLowerFragment = fragment;
             }
@@ -107,7 +107,8 @@ public class UserProfileActivity extends AppCompatActivity {
                 if (currLowerFragment != null) {
                     fragmentTransaction.remove(currLowerFragment);
                 }
-                fragmentTransaction.add(R.id.activity_userprofile, fragment);
+
+                fragmentTransaction.replace(R.id.profile_lowerfragment, fragment);
                 fragmentTransaction.commit();
                 currLowerFragment = fragment;
             }
@@ -128,8 +129,10 @@ public class UserProfileActivity extends AppCompatActivity {
                 if (currLowerFragment != null) {
                     fragmentTransaction.remove(currLowerFragment);
                 }
-                fragmentTransaction.add(R.id.activity_userprofile, fragment);
+
+                fragmentTransaction.replace(R.id.profile_lowerfragment, fragment);
                 fragmentTransaction.commit();
+
                 currLowerFragment = fragment;
             } else {
                 Log.i("FragmentExists", "Lower fragment already set to Bites");
