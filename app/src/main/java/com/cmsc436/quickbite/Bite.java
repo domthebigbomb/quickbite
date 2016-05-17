@@ -9,7 +9,8 @@ public class Bite {
     private String content;
     private int rating;
 
-    public Bite() {}
+    public Bite() {
+    }
 
     public Bite(long timestamp, String author, String content, int rating) {
         this.timestamp = timestamp;

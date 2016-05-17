@@ -17,6 +17,20 @@
     <string name="post_button">Post</string>
     <string name="bite_compose">Describe your experience (Optional)</string>
 
+    <!-- added for restaurant profile -->
+    <string name="one">Service is terrible</string>
+    <string name="two">Service is bad</string>
+    <string name="three">Service is ok</string>
+    <string name="four">Service is good</string>
+    <string name="five">Service is awesome!</string>
+    <string name="other">No service ratings yet</string>
+    <string name="vs">Wait time is very short</string>
+    <string name="s">Wait time is short</string>
+    <string name="ok">Wait time is ok</string>
+    <string name="l">Wait time is long</string>
+    <string name="vl">Wait time is very long</string>
+    <string name="noTime">No wait time reported</string>
+
     <!-- Names -->
     <string-array name="Location_names">
         <item>RJ Bentley\'s</item>

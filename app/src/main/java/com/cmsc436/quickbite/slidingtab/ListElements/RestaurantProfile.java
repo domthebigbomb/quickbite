@@ -15,6 +15,10 @@ import android.widget.TextView;
 import com.cmsc436.quickbite.Bite;
 import com.cmsc436.quickbite.R;
 import com.cmsc436.quickbite.TimerActivity;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.yelp.clientlib.connection.YelpAPI;
 import com.yelp.clientlib.connection.YelpAPIFactory;
 import com.yelp.clientlib.entities.Business;
@@ -41,6 +45,8 @@ public class RestaurantProfile extends AppCompatActivity {
     Response<Business> response;
     private String restaurantID;
     private String restaurantName;
+    ArrayList<Bite> biteData;
+    int serviceRating = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,62 +61,83 @@ public class RestaurantProfile extends AppCompatActivity {
         TextView name = (TextView)findViewById(R.id.name);
         name.setText(restaurantName);
 
-        /*Get average service rating from intent here. Hardcoding it for now*/
-        int serviceRating = 3;
-        TextView service = (TextView)findViewById(R.id.service);
-        if(serviceRating == 1){
-            service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_very_dissatisfied), null, null, null);
-            service.setText("Service is terrible");
-        }else if(serviceRating == 2){
-            service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_dissatisfied), null, null, null);
-            service.setText("Service is bad");
-        }else if(serviceRating == 3){
-            service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_neutral), null, null, null);
-            service.setText("Service is ok");
-        }else if(serviceRating == 4){
-            service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_satisfied), null, null, null);
-            service.setText("Service is good");
-        }else if(serviceRating == 5){
-            service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_satisfied), null, null, null);
-            service.setText("Service is awesome!");
-        }else{
-            service.setText("No service ratings yet!");
-        }
 
         /*Get wait time from intent here. Hardcoding for now.*/
-        int waitTime = 8;
+        //given as seconds. divide by 60.
+        int waitTime = 30;
         TextView txt = (TextView)findViewById(R.id.waitTime);
-        if(waitTime <= 5){
-            txt.setText("Wait time is very short");
+        if(waitTime == -1){
+            txt.setText(getString(R.string.noTime));
         }else if(waitTime <= 10){
-            txt.setText("Wait time is short");
-        }else if(waitTime <= 15){
-            txt.setText("Wait time is ok");
-        }else if(waitTime <= 20){
-            txt.setText("Wait time is long");
-        }else if(waitTime <= 25){
-            txt.setText("Wait time is very long");
-        }else{
-            txt.setText("Wait time not reported");
+            txt.setText(getString(R.string.s));
+        }else if(waitTime <= 30){
+            txt.setText(getString(R.string.ok));
+        }else if(waitTime > 30){
+            txt.setText(getString(R.string.l));
         }
 
         RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
-        //CardView card1 = (CardView) findViewById(R.id.card1);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(layoutManager);
-        Bite b1 = new Bite(30000, "Liana Alvarez", "This place sucks", 3);
-        Bite b2 = new Bite(294190, "David Greene", "I like chipotle", 5);
-        ArrayList<Bite> biteData = new ArrayList<Bite>();
 
-        biteData.add(b1);
-        biteData.add(b2);
+
+        biteData = new ArrayList<Bite>();
+
+        // Get a database reference to our posts
+        Firebase ref = new Firebase("https://quick-bite.firebaseio.com/").child(restaurantID).child("bites");
+        //attach a listener
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                biteData.clear();
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Bite b = postSnapshot.getValue(Bite.class);
+                    serviceRating += b.getRating();
+                    biteData.add(0, b);
+                }
+
+                /*Initialize service rating*/
+                TextView service = (TextView) findViewById(R.id.service);
+                if(biteData.size() != 0) {
+
+                    serviceRating = serviceRating / biteData.size();
+                    if (serviceRating == 1) {
+                        service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_very_dissatisfied), null, null, null);
+                        service.setText(getString(R.string.one));
+                    } else if (serviceRating == 2) {
+                        service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_dissatisfied), null, null, null);
+                        service.setText(getString(R.string.two));
+                    } else if (serviceRating == 3) {
+                        service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_neutral), null, null, null);
+                        service.setText(getString(R.string.three));
+                    } else if (serviceRating == 4) {
+                        service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_satisfied), null, null, null);
+                        service.setText(getString(R.string.four));
+                    } else if (serviceRating == 5) {
+                        service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_satisfied), null, null, null);
+                        service.setText(getString(R.string.five));
+                    } else {
+                        service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_neutral), null, null, null);
+                        service.setText(getString(R.string.other));
+                    }
+                }else{
+                    service.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.drawable.qb_gray_neutral), null, null, null);
+                    service.setText(getString(R.string.other));
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+
 
         RVAdapter adapter = new RVAdapter(biteData);
         rv.setAdapter(adapter);
 
         //needs to be in an asycn task to avoid NetworkOnMainThreadException
         new GetBusinessData().execute(restaurantID);
-
 
     }
 
