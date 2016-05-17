@@ -1,68 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="1">
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:stretchColumns="1, 2, 3">
 
-        <!--temp filler rows-->
         <TableRow>
             <TextView
                 android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
+                android:text="Score"
                 android:padding="3dip" />
         </TableRow>
 
-        <!-- simple message -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/up_rank_img"
+                android:layout_column="1"
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:src="@drawable/up_rank"
+                android:padding="3dip" />
+
+            <TextView
+                android:layout_column="2"
+                android:text="Rank"
+                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:padding="3dip" />
+
+            <TextView
+                android:layout_column="3"
+                android:text="178"
+                android:layout_gravity="right|center_horizontal|center_vertical"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/up_points_img"
+                android:layout_column="1"
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:src="@drawable/up_points"
+                android:padding="3dip" />
+
+            <TextView
+                android:layout_column="2"
+                android:text="Points"
+                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:padding="3dip" />
+
+            <TextView
+                android:layout_column="3"
+                android:text="15000"
+                android:layout_gravity="right|center_horizontal|center_vertical"
+                android:padding="3dip" />
+        </TableRow>
+
         <TableRow>
             <TextView
                 android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-            <TextView
-                android:text="Tab"
-                android:gravity="right"
+                android:text="Favorites"
                 android:padding="3dip" />
         </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_column="1"
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:src="@drawable/ic_map_marker_yellow"
+                android:padding="3dip" />
+
+            <TextView
+                android:layout_column="2"
+                android:text="Chipotle"
+                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_column="1"
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:src="@drawable/ic_map_marker_green"
+                android:padding="3dip" />
+
+            <TextView
+                android:layout_column="2"
+                android:text="Qdoba"
+                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:padding="3dip" />
+        </TableRow>
+
     </TableLayout>
 
 </RelativeLayout>

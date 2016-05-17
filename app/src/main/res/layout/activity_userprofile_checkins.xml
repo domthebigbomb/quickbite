@@ -5,64 +5,60 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="1">
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:stretchColumns="1, 2, 3">
 
-        <!--temp filler rows-->
-        <TableRow>
-            <TextView
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
                 android:layout_column="1"
-                android:text="Info"
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:src="@drawable/ic_map_marker_yellow"
                 android:padding="3dip" />
-        </TableRow>
-        <TableRow>
+
             <TextView
-                android:layout_column="1"
-                android:text="Info"
+                android:layout_column="2"
+                android:text="Chipotle"
+                android:layout_gravity="left|center_horizontal|center_vertical"
                 android:padding="3dip" />
-        </TableRow>
-        <TableRow>
+
             <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="Info"
+                android:layout_column="3"
+                android:text="Today"
+                android:layout_gravity="right|center_horizontal|center_vertical"
                 android:padding="3dip" />
         </TableRow>
 
-        <!-- simple message -->
-        <TableRow>
-            <TextView
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
                 android:layout_column="1"
-                android:text="Check-Ins"
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:src="@drawable/ic_map_marker_green"
                 android:padding="3dip" />
+
             <TextView
-                android:text="Tab"
-                android:gravity="right"
+                android:layout_column="2"
+                android:text="Qdoba"
+                android:layout_gravity="left|center_horizontal|center_vertical"
+                android:padding="3dip" />
+
+            <TextView
+                android:layout_column="3"
+                android:text="Yesterday"
+                android:layout_gravity="right|center_horizontal|center_vertical"
                 android:padding="3dip" />
         </TableRow>
+
     </TableLayout>
 
 </RelativeLayout>

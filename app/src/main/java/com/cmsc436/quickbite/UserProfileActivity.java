@@ -51,6 +51,8 @@ public class UserProfileActivity extends AppCompatActivity {
         // Gets username
         UserProfileActivity.username = ((MyApplication) this.getApplication()).getUsername();
 
+        UserProfileActivity.username = "Jeremy";
+
         // obtain user data
         if (UserProfileActivity.username == null || UserProfileActivity.username.equals("")) {
             // cannot load user data
@@ -84,7 +86,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 if (currLowerFragment != null) {
                     fragmentTransaction.remove(currLowerFragment);
                 }
-                fragmentTransaction.add(R.id.activity_userprofile, fragment);
+                fragmentTransaction.replace(R.id.profile_lowerfragment, fragment);
                 fragmentTransaction.commit();
                 currLowerFragment = fragment;
             }
@@ -105,7 +107,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 if (currLowerFragment != null) {
                     fragmentTransaction.remove(currLowerFragment);
                 }
-                fragmentTransaction.add(R.id.activity_userprofile, fragment);
+                fragmentTransaction.replace(R.id.profile_lowerfragment, fragment);
                 fragmentTransaction.commit();
                 currLowerFragment = fragment;
             }
@@ -126,7 +128,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 if (currLowerFragment != null) {
                     fragmentTransaction.remove(currLowerFragment);
                 }
-                fragmentTransaction.add(R.id.activity_userprofile, fragment);
+                fragmentTransaction.replace(R.id.profile_lowerfragment, fragment);
                 fragmentTransaction.commit();
                 currLowerFragment = fragment;
             } else {
