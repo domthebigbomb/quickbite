@@ -191,27 +191,20 @@ public class LocationList extends ListFragment implements GoogleApiClient.Connec
 						} else if (wait > 1800) {
 							resId =2;
 
-						} else {
-
 						}
 
 
-					} else {
 					}
 
 					if (resId != -1) {
 
-					//	for (int z = 0; z < rowItems.size(); z++) {
-						//	if (rowItems.get(z).getLocation_id().equals(itemIn.getLocation_id())) {
+
 								rowItems.get(idx).seticon_id(icon_pics.getResourceId(resId,-1));
                                 rowItems.get(idx).setWaitTime(wait);
 
-								//rowItems.set(idx, itemIn);
 								adapter.notifyDataSetChanged();
-							//	break;
 							}
-						//}
-					//}
+
 				}
 
 				@Override
