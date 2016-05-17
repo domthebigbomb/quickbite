@@ -48,7 +48,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar_userprofile);
         setSupportActionBar(toolbar); // Setting toolbar as the ActionBar with setSupportActionBar() call
-
+        getSupportActionBar().setTitle("");
         // Gets username
         user = ((MyApplication) this.getApplication()).getCurrentUser();
         if (user != null) {
@@ -90,6 +90,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 }
                 fragmentTransaction.replace(R.id.profile_lowerfragment, fragment);
                 fragmentTransaction.commit();
+
                 currLowerFragment = fragment;
             }
             else {
@@ -147,14 +148,6 @@ public class UserProfileActivity extends AppCompatActivity {
         return true;
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -185,6 +178,8 @@ public class UserProfileActivity extends AppCompatActivity {
         bites.setText("Bites");
         bites.setTextOn("Bites");
         bites.setTextOff("Bites");
+
+        populateLowerScreen(1);
 
         // if any of the ToggleButtons are clicked, toggle the other ones to off
         tb.setOnClickListener(new View.OnClickListener() {

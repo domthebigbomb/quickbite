@@ -10,11 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.cmsc436.quickbite.slidingtab.ListElements.LocationList;
 import com.cmsc436.quickbite.slidingtab.ListElements.RestaurantProfile;
 import com.firebase.client.Firebase;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,10 +30,12 @@ public class TimerActivity extends AppCompatActivity {
     private boolean isTimerRunning = false;
     private int elapsedTime = 0;
     private Timer timer;
+    private TextView currentWaitText;
     private EditText waitText;
     private Firebase waitRef;
     private String restaurantID;
     private String restaurantName;
+    private long currentWaitTime;
     private String address;
 
     public Handler mHandler = new Handler() {
@@ -65,6 +70,10 @@ public class TimerActivity extends AppCompatActivity {
         restaurantID = bundle.getString(LocationList.restaurantIDKey);
         restaurantName = bundle.getString(LocationList.restaurantNameKey);
         address = bundle.getString(RestaurantProfile.addressKey);
+
+        currentWaitTime = bundle.getLong(LocationList.waitKey);
+        currentWaitText = (TextView) findViewById(R.id.currentWaitTime);
+        currentWaitText.setText("Current wait time: ~" + Math.round(currentWaitTime / 60) + "min");
 
         waitRef = new Firebase("https://quick-bite.firebaseio.com/").child(restaurantID).child("waitTime");
     }

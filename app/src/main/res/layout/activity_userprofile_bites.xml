@@ -10,10 +10,9 @@
         android:layout_width="match_parent"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="8dp"
         android:background="#FFFFFF"
-        app:cardCornerRadius="5dp"
-        app:contentPadding="5dp">
+        app:contentPadding="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,15 +22,18 @@
                 android:id="@+id/card_1_tb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="8dp"
                 android:textStyle="bold"
                 android:text="Chipotle (March 2nd, 6:30 PM)"
+                android:textSize="18dp"
                 android:layout_alignParentTop="true"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:layout_alignStart="@+id/card_1_tb"
+                android:textSize="18dp"
                 android:text="Line was out the door! Due to free Chipotle coupons, chicken was sold out. Had to wait 10 minutes just to get served."
                 android:layout_below="@+id/card_1_tb"/>
 
@@ -43,10 +45,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
+        android:layout_margin="8dp"
         android:background="#FFFFFF"
-        app:cardCornerRadius="2dp"
-        app:contentPadding="5dp">
+        app:contentPadding="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -56,16 +57,19 @@
                 android:id="@+id/card_2_tb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="8dp"
                 android:textStyle="bold"
                 android:text="Qdoba (February 15th, 2:35 PM)"
+                android:textSize="18dp"
                 android:layout_alignParentTop="true"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_alignStart="@+id/card_2_tb"
+                android:layout_marginBottom="8dp"
                 android:text="Fast service, great tasting Mexican food, no complaints."
+                android:textSize="18dp"
                 android:layout_below="@+id/card_2_tb"/>
 
         </RelativeLayout>
